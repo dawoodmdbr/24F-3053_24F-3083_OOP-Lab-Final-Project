@@ -6,8 +6,8 @@
 #include <array>
 using namespace std;
 
-enum class SocialClass { PEASANT, MERCHANT, NOBLE, SOLDIER, SOCIAL_CLASS_COUNT };
-enum class ResourceType { FOOD, WOOD, STONE, IRON, GOLD, RESOURCE_TYPE_COUNT };
+enum SocialClass { PEASANT, MERCHANT, NOBLE, SOLDIER, SOCIAL_CLASS_COUNT };
+enum ResourceType { FOOD, WOOD, STONE, IRON, GOLD, RESOURCE_TYPE_COUNT };
 
 class Population;
 class Military;
@@ -41,7 +41,7 @@ private:
         double happiness;
     };
 
-    array<SocialGroup, static_cast<size_t>(SocialClass::SOCIAL_CLASS_COUNT)> groups;
+    array<SocialGroup, static_cast<int>(SocialClass::SOCIAL_CLASS_COUNT)> groups; // Fixed-size array using std::array
     double growthRate;
     double health;
 
