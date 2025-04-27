@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STRONGHOLD_H
+#define STRONGHOLD_H
 #include <iostream>
 #include <string>
 using namespace std;
@@ -121,3 +122,4 @@ public:
     }
 };
 
+#endif
