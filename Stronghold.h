@@ -1,22 +1,38 @@
 #ifndef STRONGHOLD_H
 #define STRONGHOLD_H
+
 #include <iostream>
 #include <string>
+#include <array>
 using namespace std;
 
-enum SocialClass { PEASANT, MERCHANT, NOBLE, SOLDIER, SOCIAL_CLASS_COUNT };
-enum ResourceType { FOOD, WOOD, STONE, IRON, GOLD, RESOURCE_TYPE_COUNT };
+enum class SocialClass { PEASANT, MERCHANT, NOBLE, SOLDIER, SOCIAL_CLASS_COUNT };
+enum class ResourceType { FOOD, WOOD, STONE, IRON, GOLD, RESOURCE_TYPE_COUNT };
 
 class Population;
 class Military;
 class Economy;
 class Leadership;
 
-//main kingdom class
 class Kingdom {
+private:
+    Population* population;
+    Military* military;
+    Economy* economy;
+    Leadership* leadership;
+
+public:
+    Kingdom();
+    ~Kingdom();
+
+    Population* getPopulation() const;
+    Military* getMilitary() const;
+    Economy* getEconomy() const;
+    Leadership* getLeadership() const;
+
+    void update();
 };
 
-//population handling
 class Population {
 private:
     struct SocialGroup {
@@ -25,7 +41,7 @@ private:
         double happiness;
     };
 
-    SocialGroup groups[SOCIAL_CLASS_COUNT];
+    array<SocialGroup, static_cast<size_t>(SocialClass::SOCIAL_CLASS_COUNT)> groups;
     double growthRate;
     double health;
 
@@ -38,13 +54,10 @@ public:
     int getCount(SocialClass sClass) const;
     double getHappiness(SocialClass sClass) const;
     double getOverallHappiness() const;
-    double getHealth() const { 
-        return health; 
-    }
+    double getHealth() const;
     void affectHealth(double amount);
 };
 
-//military system
 class Military {
 private:
     int soldiers;
@@ -60,21 +73,12 @@ public:
     void train(double resourcesSpent);
     void affectMorale(double amount);
     void affectCorruption(double amount);
-    int getSoldierCount() const { 
-        return soldiers; 
-    }
-    int getTrainedSoldierCount() const { 
-        return trainedSoldiers; 
-    }
-    double getMorale() const { 
-        return morale; 
-    }
-    double getCorruptionLevel() const { 
-        return corruptionLevel; 
-    }
+    int getSoldierCount() const;
+    int getTrainedSoldierCount() const;
+    double getMorale() const;
+    double getCorruptionLevel() const;
 };
 
-//economy system
 class Economy {
 private:
     double treasury;
@@ -86,24 +90,17 @@ public:
     void update(Kingdom& kingdom);
     void collectTaxes(Population& population);
     void setTaxRate(double rate);
-    double getTreasury() const { 
-        return treasury; 
-    }
-    double getTaxRate() const { 
-        return taxRate; 
-    }
-    double getInflation() const { 
-        return inflation; 
-    }
+    double getTreasury() const;
+    double getTaxRate() const;
+    double getInflation() const;
     bool spend(double amount);
     void earn(double amount);
 };
 
-//leadership system
 class Leadership {
 private:
     string leaderName;
-    int leadershipStyle; 
+    int leadershipStyle; // 0:autocratic, 1:democratic
     double popularity;
 
 public:
@@ -111,15 +108,9 @@ public:
     void update(Kingdom& kingdom);
     void changeLeader(const string& newName, int style);
     void affectPopularity(double amount);
-    string getLeaderName() const { 
-        return leaderName; 
-    }
-    int getLeadershipStyle() const { 
-        return leadershipStyle; 
-    }
-    double getPopularity() const { 
-        return popularity; 
-    }
+    string getLeaderName() const;
+    int getLeadershipStyle() const;
+    double getPopularity() const;
 };
 
-#endif
+#endif // STRONGHOLD_H
