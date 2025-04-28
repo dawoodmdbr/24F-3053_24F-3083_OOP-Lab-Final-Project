@@ -35,6 +35,11 @@ public:
 
 class Population {
 private:
+    struct SocialGroup {
+        SocialClass sClass;
+        int count;
+        double happiness;
+    };
 
     array<SocialGroup, static_cast<int>(SocialClass::SOCIAL_CLASS_COUNT)> groups; // Fixed-size array using std::array
     double growthRate;
