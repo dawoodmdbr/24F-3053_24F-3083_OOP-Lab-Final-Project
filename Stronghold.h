@@ -29,7 +29,6 @@ public:
     Military* getMilitary() const;
     Economy* getEconomy() const;
     Leadership* getLeadership() const;
-
     void update();
 };
 
@@ -106,11 +105,12 @@ private:
 public:
     Leadership(const string& name);
     void update(Kingdom& kingdom);
+    void holdElection(Kingdom& kingdom);
+    void initiateCoup(Kingdom& kingdom);
     void changeLeader(const string& newName, int style);
     void affectPopularity(double amount);
     string getLeaderName() const;
     int getLeadershipStyle() const;
     double getPopularity() const;
 };
-
-#endif // STRONGHOLD_H
+#endif 
