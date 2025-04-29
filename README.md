@@ -18,7 +18,8 @@ A C++ simulation of a medieval kingdom. Players manage the kingdom's core system
 - `Population` — Handles social classes & their stats  
 - `Resource` — Manages food, gold, iron, wood, stone  
 - `ResourceManager` — Controls gathering, trade, stockpile  
-- `Military` — Handles soldiers, morale, pay  
+- `Event` — Famine, war, disasters  
+- `EventManager` — Random event generation  
 - `Kingdom` — Central class that connects all systems  
 
 ### 🔸 Zain (`24F-3083`)
@@ -26,8 +27,7 @@ A C++ simulation of a medieval kingdom. Players manage the kingdom's core system
 - `Leadership` — Leader’s style, popularity, coups  
 - `Economy` — Tax, inflation, gold reserves  
 - `Corruption` — Tracks corruption across systems  
-- `Event` — Famine, war, disasters  
-- `EventManager` — Random event generation  
+- `Military` — Handles soldiers, morale, pay  
 - `Audit` — Checks for fraud and mismanagement  
 
 ---
