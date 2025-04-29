@@ -47,7 +47,7 @@ public:
     void holdElection(Kingdom& kingdom);
     void initiateCoup(Kingdom& kingdom);
     void changeLeader(const string& newName, int style);
-    void affectPopularity(double amount);
+    void affectPopularity(double a);
     string getLeaderName() const;
     int getLeadershipStyle() const;
     double getPopularity() const;
@@ -60,10 +60,10 @@ private:
 
 public:
     Resource();
-    Resource(ResourceType type, double amount);
-    void gather(double amount);
-    void consume(double amount);
-    void trade(double amount);
+    Resource(ResourceType type, double a);
+    void gather(double a);
+    void consume(double a);
+    void trade(double a);
     ResourceType getType() const;
     double getAmount() const;
     void setAmount(double amt);
@@ -75,9 +75,9 @@ private:
 
 public:
     ResourceManager();
-    void gather(ResourceType type, int amount);
-    void consume(ResourceType type, int amount);
-    void trade(ResourceType fromType, ResourceType toType, int amount);
+    void gather(ResourceType type, int a);
+    void consume(ResourceType type, int a);
+    void trade(ResourceType fromType, ResourceType toType, int a);
     int get(ResourceType type) const;
 };
 
@@ -90,8 +90,8 @@ private:
 public:
     Economy();
     void update(Kingdom& kingdom);
-    void adjustTaxRate(double amount);
-    void adjustInflation(double amount);
+    void adjustTaxRate(double a);
+    void adjustInflation(double a);
     void tradeResources();
     void fundPublicServices();
     double getTaxRate() const;
@@ -108,8 +108,8 @@ private:
 
 public:
     Bank();
-    void issueLoan(double amount);
-    void repayLoan(double amount);
+    void issueLoan(double a);
+    void repayLoan(double a);
     void auditTreasury();
     void detectFraud();
     void applyInterest();
@@ -158,7 +158,7 @@ private:
 
 public:
     Corruption();
-    void applyCorruption(double amount);
+    void applyCorruption(double a);
     void removeCorruption();
     bool isCorrupted() const;
 };
