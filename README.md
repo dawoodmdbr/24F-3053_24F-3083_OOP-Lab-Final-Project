@@ -15,7 +15,7 @@ The project is divided into several classes, each managing a different aspect of
 
 ### Mian Dawood's Responsibilities:
 1. **Population**: Manages the population of the kingdom, including various social classes (Peasants, Merchants, Nobles, Soldiers), their growth, happiness, and health.
-2. **Leadership**: Manages the kingdom's leadership, including different leadership styles (autocratic, democratic), popularity, elections, and coups.
+2. **Resource**: Handles resources like food, wood, stone, iron, and gold. Manages their gathering, consumption, and trade.
 3. **Economy**: Handles the economic structure, taxation, inflation, and public services funding.
 4. **Military**: Manages military units, training, pay, and morale.
 5. **EventManager**: Manages random events like famine, disease, and war, which affect the kingdom's stability.
@@ -23,7 +23,7 @@ The project is divided into several classes, each managing a different aspect of
 
 ### Zain's Responsibilities:
 1. **Bank**: Manages banking functionality, including loans, interest, and fraud detection.
-2. **Resource**: Handles resources like food, wood, stone, iron, and gold. Manages their gathering, consumption, and trade.
+2. **Leadership**: Manages the kingdom's leadership, including different leadership styles (autocratic, democratic), popularity, elections, and coups.
 3. **ResourceManager**: Oversees resource collection, stockpiling, and trade.
 4. **Corruption**: Manages corruption levels in the kingdom, influencing various systems like economy, military, and leadership.
 5. **Event**: Represents specific events (e.g., famine, war, drought) and their impact on the kingdom.
@@ -49,7 +49,7 @@ The project is divided into several classes, each managing a different aspect of
 ## Project Division
 
 ### Mian Dawood's Tasks:
-- Implemented **Stronghold.h** **Population.cpp**, **Economy.cpp**, **Military.cpp**, **EventManager.cpp**, and **Audit.cpp** classes.
+- Implemented **Stronghold.h**, **Resource.cpp**, **Population.cpp**, **Economy.cpp**, **Military.cpp**, **EventManager.cpp**, and **Audit.cpp** classes.
 - Designed and implemented the core game mechanics related to kingdom management.
 
 ### Zain's Tasks:
