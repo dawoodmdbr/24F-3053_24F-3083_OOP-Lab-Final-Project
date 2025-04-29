@@ -2,13 +2,11 @@
 #define STRONGHOLD_H
 
 #include <string>
-#include <vector>
 #include <random>
 
 using namespace std;
 
 enum SocialClass { PEASANT, MERCHANT, NOBLE, SOLDIER, SOCIAL_CLASS_COUNT };
-
 enum ResourceType { FOOD, WOOD, STONE, IRON, GOLD, RESOURCE_TYPE_COUNT };
 
 struct SocialGroup {
@@ -17,12 +15,14 @@ struct SocialGroup {
     double happiness;
 };
 
+class Kingdom;
+
 class Population {
 private:
     SocialGroup groups[SOCIAL_CLASS_COUNT];
     double growthRate;
     double health;
-    
+
 public:
     Population();
     void update(Kingdom& kingdom);
@@ -40,7 +40,7 @@ private:
     string leaderName;
     int leadershipStyle;
     double popularity;
-    
+
 public:
     Leadership(const string& name);
     void update(Kingdom& kingdom);
@@ -53,13 +53,40 @@ public:
     double getPopularity() const;
 };
 
+class Resource {
+private:
+    ResourceType type;
+    double amount;
+
+public:
+    Resource();
+    Resource(ResourceType type, double amount);
+    void gather(double amount);
+    void consume(double amount);
+    void trade(double amount);
+    ResourceType getType() const;
+    double getAmount() const;
+    void setAmount(double amt);
+};
+
+class ResourceManager {
+private:
+    Resource resources[RESOURCE_TYPE_COUNT];
+
+public:
+    ResourceManager();
+    void gather(ResourceType type, int amount);
+    void consume(ResourceType type, int amount);
+    void trade(ResourceType fromType, ResourceType toType, int amount);
+    int get(ResourceType type) const;
+};
+
 class Economy {
 private:
     double taxRate;
     double inflationRate;
     double goldReserve;
-    vector<Resource> resources;
-    
+
 public:
     Economy();
     void update(Kingdom& kingdom);
@@ -78,7 +105,7 @@ private:
     double interestRate;
     double treasuryBalance;
     bool fraudDetected;
-    
+
 public:
     Bank();
     void issueLoan(double amount);
@@ -94,7 +121,7 @@ private:
     double morale;
     double foodRequired;
     double payRequired;
-    
+
 public:
     Military();
     void recruitSoldiers(int count);
@@ -103,45 +130,22 @@ public:
     void manageMorale();
 };
 
-class Resource {
-private:
-    ResourceType type;
-    double amount;
-    
-public:
-    Resource(ResourceType type, double amount);
-    void gather(double amount);
-    void consume(double amount);
-    void trade(double amount);
-    ResourceType getType() const;
-    double getAmount() const;
-};
-
-class ResourceManager {
-private:
-    vector<Resource> resources;
-    
-public:
-    ResourceManager();
-    void updateResources();
-    void tradeResources(Resource& resource, double amount);
-    void stockpileResources(Resource& resource, double amount);
-};
-
 class Event {
 private:
     string description;
     int impact;
-    
+
 public:
+    Event();
     Event(string description, int impact);
     void triggerEvent();
 };
 
 class EventManager {
 private:
-    vector<Event> events;
-    
+    Event events[10];
+    int eventCount;
+
 public:
     EventManager();
     void generateRandomEvent();
@@ -151,7 +155,7 @@ public:
 class Corruption {
 private:
     double corruptionLevel;
-    
+
 public:
     Corruption();
     void applyCorruption(double amount);
@@ -160,8 +164,6 @@ public:
 };
 
 class Audit {
-private:
-    
 public:
     Audit();
     void conductAudit(Kingdom& kingdom);
@@ -179,7 +181,7 @@ private:
     EventManager eventManager;
     Audit audit;
     Corruption corruption;
-    
+
 public:
     Kingdom();
     void update();
@@ -187,4 +189,4 @@ public:
     void handleEvents();
 };
 
-#endif  // STRONGHOLD_H
+#endif
