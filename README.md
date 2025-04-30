@@ -7,7 +7,7 @@
 ---
 
 ## 📌 Project Overview
-A C++ simulation of a medieval kingdom. Players manage the kingdom's core systems — population, leadership, economy, resources, military, events, and corruption. The goal is to keep everything balanced and the kingdom stable.
+A C++ simulation of a medieval kingdom. Players manage the kingdom's core systems — population, leadership, economy, resources, military, events, corruption, and more. The goal is to keep everything balanced and the kingdom stable, ensuring prosperity and handling random challenges.
 
 ---
 
@@ -29,6 +29,7 @@ A C++ simulation of a medieval kingdom. Players manage the kingdom's core system
 - `Corruption` — Tracks corruption across systems  
 - `Military` — Handles soldiers, morale, pay  
 - `Audit` — Checks for fraud and mismanagement  
+- `Economy` — Adjusts tax rate, manages inflation, trades resources
 
 ---
 
@@ -36,11 +37,12 @@ A C++ simulation of a medieval kingdom. Players manage the kingdom's core system
 - 📈 Population growth & happiness  
 - 👑 Leadership management & elections  
 - 🪖 Military morale, pay & training  
-- 📊 Economy with tax & inflation  
+- 📊 Economy with tax, inflation, and gold reserves  
 - 💰 Resource tracking and trading  
 - 💼 Banking with loan and fraud system  
 - ⚔️ Random events affecting the kingdom  
 - 🧾 Audit system & corruption detection  
+- 🔨 Advanced economy mechanics: Inflation, tax rates, and trading  
 
 ---
 
@@ -57,5 +59,3 @@ A C++ simulation of a medieval kingdom. Players manage the kingdom's core system
 3. Compile the project  
 4. Run the executable  
 5. Enjoy ruling your kingdom ⚔️👑  
-
----
