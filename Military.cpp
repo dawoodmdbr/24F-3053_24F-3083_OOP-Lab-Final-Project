@@ -10,6 +10,16 @@ void Military::recruitSoldiers(int count) {
         if (morale < 0.0) morale = 0.0;
     }
 }
+void Military::update(Kingdom& kingdom) {
+    manageMorale(); 
+    if (foodRequired > 0) {
+        foodRequired -= 1.0; 
+        if (foodRequired < 0.0) foodRequired = 0.0;
+    }
+    if (payRequired > 0) {
+        paySoldiers(); 
+    }
+}
 void Military::paySoldiers() {
     if (payRequired > 0) {
         payRequired = 0.0; 

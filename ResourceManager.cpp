@@ -27,3 +27,8 @@ int ResourceManager::get(ResourceType type) const {
     }
     return 0;
 }
+void ResourceManager::update(Kingdom& kingdom) {
+    for (int i = 0; i < RESOURCE_TYPE_COUNT; i++) {
+        resources[i].update(kingdom);
+    }
+}

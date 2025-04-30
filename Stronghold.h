@@ -161,6 +161,7 @@ private:
 public:
     Event();
     Event(EventType t, const string& desc, int imp);
+    void update(Kingdom& kingdom);
     void triggerEvent();
     EventType getType() const;
     string getDescription() const;

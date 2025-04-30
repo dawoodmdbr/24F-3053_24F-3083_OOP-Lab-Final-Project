@@ -41,3 +41,14 @@ void Bank::applyInterest() {
     loanAmount += loanAmount * (interestRate / 100.0);
 }
 
+void Bank::update(Kingdom& kingdom) {
+    if (fraudDetected) {
+        treasuryBalance -= 1000.0;
+        fraudDetected = false;
+    }
+    applyInterest();
+    auditTreasury();
+    if (corruptionLevel > 0.5) {
+        treasuryBalance -= 500.0;
+    }
+}

@@ -9,6 +9,14 @@ EventManager::EventManager() : eventCount(0) {
     srand(time(0)); // Seed random number generator
 }
 
+void EventManager::update(Kingdom& kingdom) {
+    cout << "Updating event manager...\n";
+    // Example: Check if any events need to be applied
+    if (eventCount > 0) {
+        Event latestEvent = events[eventCount - 1];
+        applyEvent(latestEvent);
+    }
+}
 void EventManager::generateRandomEvent() {
     if (eventCount >= 10) {
         cout << "Event queue full. Cannot generate more events.\n";

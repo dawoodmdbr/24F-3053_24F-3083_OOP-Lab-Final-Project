@@ -20,3 +20,12 @@ double Resource::getAmount() const {
 void Resource::setAmount(double amt) {
     this->amount = amt;
 }
+void Resource::update(Kingdom& kingdom) {
+    // Update resource based on kingdom's state
+    if (kingdom.getEconomy().getTaxRate() > 0.5) {
+        amount -= 0.1 * amount; // Taxation effect
+    }
+    if (kingdom.getPopulation().getOverallHappiness() < 50) {
+        amount -= 0.05 * amount; // Happiness effect
+    }
+}
