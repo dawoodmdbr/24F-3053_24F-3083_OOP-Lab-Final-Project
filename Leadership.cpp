@@ -1,15 +1,15 @@
 #include "Stronghold.h"
 Leadership::Leadership(const string& name) {
 	leaderName = name;
-	leadershipStyle = 0; // autocratic=0,democratic=1
+	leadershipStyle = 0; 
 	popularity = 50.0; 
 }
 void Leadership::update(Kingdom& kingdom) {
 	if (leadershipStyle == 0) { 
-		popularity -= 0.1; //autocratic systems
+		popularity -= 0.1; 
 	}
 	else { 
-		popularity += 0.1; //democratic systems
+		popularity += 0.1; 
 	}
 	if (popularity < 0) {
 		popularity = 0;
@@ -32,7 +32,7 @@ void Leadership::initiateCoup(Kingdom& kingdom) {
 }
 void Leadership::changeLeader(const string& newName, int style) {
 	leaderName = newName;
-	leadershipStyle = style;//0:autocratic  1:democratic
+	leadershipStyle = style;
 	popularity = 50.0;
 }
 void Leadership::affectPopularity(double amount) {
