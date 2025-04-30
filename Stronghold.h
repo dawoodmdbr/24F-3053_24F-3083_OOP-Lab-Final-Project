@@ -139,17 +139,11 @@ private:
 
 public:
     Event();
-<<<<<<< Updated upstream
-    Event(string description, int impact);
-    void triggerEvent();
-=======
     Event(EventType t, const string& desc, int imp);
-
     void triggerEvent();
     EventType getType() const;
     string getDescription() const;
-    int getImpact() const;
->>>>>>> Stashed changes
+    int getImpact() const;  
 };
 
 class EventManager {
