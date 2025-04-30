@@ -33,6 +33,7 @@ public:
     int getCount(SocialClass sClass) const;
     double getHappiness(SocialClass sClass) const;
     double getOverallHappiness() const;
+    int getTotalPopulation() const;
     void affectHealth(double amount);
 };
 

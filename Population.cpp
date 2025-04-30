@@ -16,6 +16,14 @@ void Population::update(Kingdom& kingdom) {
     }
 }
 
+int Population::getTotalPopulation() const {
+    int total = 0;
+    for (int i = 0; i < SOCIAL_CLASS_COUNT; i++) {
+        total += groups[i].count;
+    }
+    return total;
+}
+
 void Population::adjustHappiness(SocialClass sClass, double amount) {
     if (sClass >= 0 && sClass < SOCIAL_CLASS_COUNT) {
         groups[sClass].happiness += amount;

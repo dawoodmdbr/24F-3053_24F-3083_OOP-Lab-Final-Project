@@ -4,13 +4,12 @@
 using namespace std;
 
 Kingdom::Kingdom()
-    : population(), leadership(), economy(), bank(), military(), resourceManager(), eventManager(), corruption() {
+    : population(), leadership(), bank(), military(), resourceManager(), eventManager(), corruption() {
 }
 
 void Kingdom::update() {
     population.update(*this);
     leadership.update(*this);
-    economy.update(*this);
     bank.update(*this);
     military.update(*this);
     resourceManager.update(*this);
@@ -46,10 +45,6 @@ Population& Kingdom::getPopulation() {
 
 Leadership& Kingdom::getLeadership() {
     return leadership;
-}
-
-Economy& Kingdom::getEconomy() {
-    return economy;
 }
 
 Bank& Kingdom::getBank() {
