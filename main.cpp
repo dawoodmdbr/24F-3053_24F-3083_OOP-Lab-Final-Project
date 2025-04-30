@@ -1,13 +1,4 @@
 #include "Stronghold.h"
-#include "Population.cpp"
-#include "Leadership.cpp"
-#include "Bank.cpp"
-#include "Military.cpp"
-#include "ResourceManager.cpp"
-#include "EventManager.cpp"
-#include "Corruption.cpp"
-#include "Event.cpp"
-#include "Kingdom.cpp"
 #include <iostream>
 
 using namespace std;
