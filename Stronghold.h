@@ -8,6 +8,7 @@ using namespace std;
 
 enum SocialClass { PEASANT, MERCHANT, NOBLE, SOLDIER, SOCIAL_CLASS_COUNT };
 enum ResourceType { FOOD, WOOD, STONE, IRON, GOLD, RESOURCE_TYPE_COUNT };
+enum EventType { PLAGUE, FAMINE, REBELLION, DISCOVERY_OF_GOLD, NATURAL_DISASTER, EVENT_TYPE_COUNT };
 
 struct SocialGroup {
     SocialClass socialClass;
@@ -132,13 +133,23 @@ public:
 
 class Event {
 private:
+    EventType type;
     string description;
     int impact;
 
 public:
     Event();
+<<<<<<< Updated upstream
     Event(string description, int impact);
     void triggerEvent();
+=======
+    Event(EventType t, const string& desc, int imp);
+
+    void triggerEvent();
+    EventType getType() const;
+    string getDescription() const;
+    int getImpact() const;
+>>>>>>> Stashed changes
 };
 
 class EventManager {
@@ -150,6 +161,7 @@ public:
     EventManager();
     void generateRandomEvent();
     void applyEvent(Event& event);
+    void handleEvent(Kingdom& kingdom, Event& event);
 };
 
 class Corruption {
