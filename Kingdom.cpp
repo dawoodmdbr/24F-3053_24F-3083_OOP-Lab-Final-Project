@@ -1,4 +1,4 @@
-#include "stronghold.h"
+#include "Stronghold.h"
 #include <iostream>
 
 using namespace std;
