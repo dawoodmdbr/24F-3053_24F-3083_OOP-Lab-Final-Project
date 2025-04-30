@@ -8,6 +8,7 @@ using namespace std;
 
 enum SocialClass { PEASANT, MERCHANT, NOBLE, SOLDIER, SOCIAL_CLASS_COUNT };
 enum ResourceType { FOOD, WOOD, STONE, IRON, GOLD, RESOURCE_TYPE_COUNT };
+enum EventType { PLAGUE, FAMINE, REBELLION, DISCOVERY_OF_GOLD, NATURAL_DISASTER, EVENT_TYPE_COUNT };
 
 struct SocialGroup {
     SocialClass socialClass;
@@ -116,12 +117,21 @@ public:
     void auditTreasury();
     void detectFraud();
     void applyInterest();
-    double getTreasuryBalance() const;
-    double getLoanAmount() const;
-    bool isFraudDetected() const;
 };
 
-class Military {
+class Corruption {
+protected:
+    double corruptionLevel;
+
+public:
+    Corruption();
+    void increaseCorruption(double amount);
+    void decreaseCorruption(double amount);
+    double getCorruptionLevel() const;
+    bool isCorrupted() const;
+};
+
+class Military : public Corruption {
 private:
     int soldierCount;
     double morale;
@@ -141,14 +151,15 @@ public:
 
 class Event {
 private:
+    EventType type;
     string description;
     int impact;
 
 public:
     Event();
-    Event(string description, int impact);
-    void update(Kingdom& kingdom);
+    Event(EventType t, const string& desc, int imp);
     void triggerEvent();
+    EventType getType() const;
     string getDescription() const;
     int getImpact() const;
 };
@@ -163,26 +174,9 @@ public:
     void update(Kingdom& kingdom);
     void generateRandomEvent();
     void applyEvent(Event& event);
+    void handleEvent(Kingdom& kingdom, Event& event);
 };
 
-class Corruption {
-private:
-    double corruptionLevel;
-
-public:
-    Corruption();
-    void applyCorruption(double a);
-    void removeCorruption();
-    bool isCorrupted() const;
-    double getCorruptionLevel() const;
-};
-
-class Audit {
-public:
-    Audit();
-    void conductAudit(Kingdom& kingdom);
-    bool detectFraud(Kingdom& kingdom);
-};
 
 class Kingdom {
 private:
@@ -193,7 +187,6 @@ private:
     Military military;
     ResourceManager resourceManager;
     EventManager eventManager;
-    Audit audit;
     Corruption corruption;
 
 public:
