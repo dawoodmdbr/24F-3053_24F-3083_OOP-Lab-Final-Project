@@ -1,5 +1,6 @@
 #include "Stronghold.h"
 Corruption::Corruption() : corruptionLevel(10.0) {}
+
 void Corruption::update(Kingdom& kingdom) {
     // Example: Increase corruption based on the kingdom's financial health
     if (kingdom.getEconomy().getGoldReserve() < 1000.0) {

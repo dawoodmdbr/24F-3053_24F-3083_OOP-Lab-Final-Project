@@ -3,8 +3,15 @@
 
 using namespace std;
 
-Kingdom::Kingdom()
-    : population(), leadership(), bank(), military(), resourceManager(), eventManager(), corruption() {
+Kingdom::Kingdom() {
+    population = Population();
+    leadership = Leadership("King Arthur");
+    economy = Economy();
+    bank = Bank();
+    military = Military();
+    resourceManager = ResourceManager();
+    eventManager = EventManager();
+    corruption = Corruption();
 }
 
 void Kingdom::update() {
