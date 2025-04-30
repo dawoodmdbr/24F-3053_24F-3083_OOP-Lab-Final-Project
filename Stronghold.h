@@ -104,19 +104,20 @@ public:
 
 class Bank {
 private:
-    double loanAmount;
-    double interestRate;
-    double treasuryBalance;
-    bool fraudDetected;
+    double loanAmount;       
+    double interestRate;     
+    double treasuryBalance;  
+    bool fraudDetected;      
+    double corruptionLevel;  
 
 public:
     Bank();
-    void update(Kingdom& kingdom);
-    void issueLoan(double a);
-    void repayLoan(double a);
-    void auditTreasury();
-    void detectFraud();
-    void applyInterest();
+    void issueLoan(double amount);       
+    void repayLoan(double amount);       
+    void auditTreasury();                
+    void applyInterest();                
+    void conductAudit();                
+    bool detectFraud();                  
 };
 
 class Corruption {
