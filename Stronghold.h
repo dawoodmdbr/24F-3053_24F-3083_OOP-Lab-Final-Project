@@ -63,8 +63,8 @@ private:
 
 public:
     Resource();
-    void update(Kingdom& kingdom);
     Resource(ResourceType type, double a);
+    void update(Kingdom& kingdom);
     void gather(double a);
     void consume(double a);
     void trade(double a);

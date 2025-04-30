@@ -59,6 +59,10 @@ ResourceManager& Kingdom::getResourceManager() {
     return resourceManager;
 }
 
+Economy& Kingdom::getEconomy() {
+    return economy;
+}
+
 EventManager& Kingdom::getEventManager() {
     return eventManager;
 }

@@ -51,3 +51,11 @@ void Military::manageMorale() {
         if (morale < 0.0) morale = 0.0;
     }
 }
+
+int  Military::getSoldierCount() const {
+    return soldierCount;
+}
+
+double Military::getMorale() const {
+    return morale;
+}

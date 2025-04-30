@@ -27,6 +27,27 @@ void Bank::repayLoan(double amount) {
         }
     }
 }
+void Bank::detectFraud() {
+    if (fraudDetected) {
+        treasuryBalance -= 1000.0;
+        fraudDetected = false;
+    }
+    if (loanAmount > treasuryBalance * 0.5) {
+        fraudDetected = true;
+    }
+}
+void Bank::update(Kingdom& kingdom) {
+    if (fraudDetected) {
+        treasuryBalance -= 1000.0;
+        fraudDetected = false;
+    }
+    applyInterest();
+    auditTreasury();
+    if (corruptionLevel > 0.5) {
+        treasuryBalance -= 500.0;
+    }
+    detectFraud();
+}
 void Bank::auditTreasury() {
     double detectionThreshold = 1000.0 - (corruptionLevel * 400);
     if (treasuryBalance < detectionThreshold) {
@@ -39,16 +60,4 @@ void Bank::auditTreasury() {
 }
 void Bank::applyInterest() {
     loanAmount += loanAmount * (interestRate / 100.0);
-}
-
-void Bank::update(Kingdom& kingdom) {
-    if (fraudDetected) {
-        treasuryBalance -= 1000.0;
-        fraudDetected = false;
-    }
-    applyInterest();
-    auditTreasury();
-    if (corruptionLevel > 0.5) {
-        treasuryBalance -= 500.0;
-    }
 }

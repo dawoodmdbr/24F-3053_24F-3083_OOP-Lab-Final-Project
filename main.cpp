@@ -93,6 +93,9 @@ int main() {
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
+        system("pause");
+
+        system("cls");
     }
 
     return 0;

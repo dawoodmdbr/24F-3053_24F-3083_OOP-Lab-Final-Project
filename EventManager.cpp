@@ -81,3 +81,9 @@ void EventManager::applyEvent(Event& event) {
 
 }
 
+void EventManager::update(Kingdom& kingdom) {
+    // Update logic for events, if needed
+    for (int i = 0; i < eventCount; ++i) {
+        events[i].update(kingdom);
+    }
+}
