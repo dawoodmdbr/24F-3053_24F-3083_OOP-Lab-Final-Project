@@ -14,9 +14,6 @@ void Population::update(Kingdom& kingdom) {
     for (int i = 0; i < SOCIAL_CLASS_COUNT; i++) {
         groups[i].count += (groups[i].count * growthRate);
     }
-    
-    double overallHappiness = getOverallHappiness();
-    health += (overallHappiness - 50) * 0.1;
 }
 
 void Population::adjustHappiness(SocialClass sClass, double amount) {
