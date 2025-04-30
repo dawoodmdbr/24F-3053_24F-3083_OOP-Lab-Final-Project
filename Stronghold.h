@@ -116,7 +116,19 @@ public:
     void applyInterest();
 };
 
-class Military {
+class Corruption {
+protected:
+    double corruptionLevel;
+
+public:
+    Corruption();
+    void increaseCorruption(double amount);
+    void decreaseCorruption(double amount);
+    double getCorruptionLevel() const;
+    bool isCorrupted() const;
+};
+
+class Military : public Corruption {
 private:
     int soldierCount;
     double morale;
@@ -143,7 +155,7 @@ public:
     void triggerEvent();
     EventType getType() const;
     string getDescription() const;
-    int getImpact() const;  
+    int getImpact() const;
 };
 
 class EventManager {
@@ -158,23 +170,6 @@ public:
     void handleEvent(Kingdom& kingdom, Event& event);
 };
 
-class Corruption {
-private:
-    double corruptionLevel;
-
-public:
-    Corruption();
-    void applyCorruption(double a);
-    void removeCorruption();
-    bool isCorrupted() const;
-};
-
-class Audit {
-public:
-    Audit();
-    void conductAudit(Kingdom& kingdom);
-    bool detectFraud(Kingdom& kingdom);
-};
 
 class Kingdom {
 private:
@@ -185,7 +180,6 @@ private:
     Military military;
     ResourceManager resourceManager;
     EventManager eventManager;
-    Audit audit;
     Corruption corruption;
 
 public:
