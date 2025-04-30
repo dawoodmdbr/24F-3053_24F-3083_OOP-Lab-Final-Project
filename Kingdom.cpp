@@ -28,6 +28,15 @@ void Kingdom::checkFinancialHealth() {
     }
 }
 
+void Kingdom::handleEvents() {
+    eventManager.generateRandomEvent();
+
+    // Safe way: Handle only the latest event
+    Event latestEvent = eventManager.getLatestEvent(); // Ensure this getter exists in EventManager
+    eventManager.applyEvent(latestEvent);
+    eventManager.handleEvent(*this, latestEvent);
+}
+
 
 
 

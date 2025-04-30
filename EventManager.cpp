@@ -67,13 +67,13 @@ void EventManager::handleEvent(Kingdom& kingdom, Event& event) {
             break;
     }
 }
-void EventManager::getLatestEvent() const {
-    if (eventCount == 0) {
+Event EventManager::getLatestEvent() const {
+    if (eventCount > 0) {
+        return events[eventCount - 1]; // Return the latest event
+    } else {
         cout << "No events available.\n";
-        return;
+        return Event(); // Return a default event if none exist
     }
-    Event latestEvent = events[eventCount - 1];
-    cout << "Latest event: " << latestEvent.getDescription() << " [Impact: " << latestEvent.getImpact() << "]\n";
 }
 void EventManager::update(Kingdom& kingdom) {
     cout << "Updating event manager...\n";

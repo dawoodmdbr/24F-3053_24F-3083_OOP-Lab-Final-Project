@@ -175,7 +175,7 @@ public:
     EventManager();
     void update(Kingdom& kingdom);
     void generateRandomEvent();
-    void getLatestEvent() const;
+    Event getLatestEvent() const;
     void applyEvent(Event& event);
     void handleEvent(Kingdom& kingdom, Event& event);
 };

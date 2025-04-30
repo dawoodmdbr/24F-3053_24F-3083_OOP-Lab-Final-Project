@@ -35,7 +35,7 @@ int main() {
                 cin >> resChoice;
                 cout << "Enter amount to gather: ";
                 cin >> amount;
-                myKingdom.resourceManager.gather(static_cast<ResourceType>(resChoice), amount);
+                myKingdom.getResourceManager().gather(static_cast<ResourceType>(resChoice), amount);
                 break;
             }
 
@@ -43,7 +43,7 @@ int main() {
                 int soldiers;
                 cout << "Enter number of soldiers to recruit: ";
                 cin >> soldiers;
-                myKingdom.military.recruitSoldiers(soldiers);
+                myKingdom.getMilitary().recruitSoldiers(soldiers);
                 break;
             }
 
@@ -51,18 +51,17 @@ int main() {
                 double rate;
                 cout << "Enter new tax rate (0.0 - 1.0): ";
                 cin >> rate;
-                myKingdom.economy.adjustTaxRate(rate);
+                myKingdom.getEconomy().adjustTaxRate(rate);
                 break;
             }
 
             case 4: {
-
                 cout << "\n--- Population Status ---" << endl;
                 for (int i = 0; i < SOCIAL_CLASS_COUNT; ++i) {
                     cout << "Class " << i << " - Count: " 
-                         << myKingdom.population.getCount(static_cast<SocialClass>(i))
+                         << myKingdom.getPopulation().getCount(static_cast<SocialClass>(i))
                          << ", Happiness: "
-                         << myKingdom.population.getHappiness(static_cast<SocialClass>(i))
+                         << myKingdom.getPopulation().getHappiness(static_cast<SocialClass>(i))
                          << endl;
                 }
                 break;
@@ -72,7 +71,7 @@ int main() {
                 cout << "\n--- Resource Status ---" << endl;
                 for (int i = 0; i < RESOURCE_TYPE_COUNT; ++i) {
                     cout << "Resource " << i << " - Amount: "
-                         << myKingdom.resourceManager.get(static_cast<ResourceType>(i))
+                         << myKingdom.getResourceManager().get(static_cast<ResourceType>(i))
                          << endl;
                 }
                 break;
