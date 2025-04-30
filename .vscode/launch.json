@@ -1,7 +1,48 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": []
+    "configurations": [
+        {
+            "name": "C++ Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/a.out",  // Path to the compiled binary
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true, // Open a separate console for input/output
+            "MIMode": "gdb", // GDB for Linux or macOS
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb", // Path to GDB (adjust if necessary)
+            "preLaunchTask": "build", // Make sure you have a task named "build"
+            "logging": {
+                "engineLogging": false
+            },
+            "buildTasks": [
+                {
+                    "label": "build",
+                    "type": "shell",
+                    "command": "g++",
+                    "args": [
+                        "-g", // Generate debug information
+                        "${workspaceFolder}/*.cpp", // Compile all source files
+                        "-o", "${workspaceFolder}/a.out" // Output file
+                    ],
+                    "group": {
+                        "kind": "build",
+                        "isDefault": true
+                    },
+                    "problemMatcher": ["$gcc"],
+                    "detail": "Generated task by VSCode"
+                }
+            ],
+            "postLaunchTask": "launch"
+        }
+    ]
 }
