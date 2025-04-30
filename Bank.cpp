@@ -23,7 +23,7 @@ void Bank::repayLoan(double amount) {
     if (repayment >= loanAmount * 0.2) {
         corruptionLevel -= 0.05;
         if (corruptionLevel < 0.0) {
-			corruptionLevel = 0.0;
+            corruptionLevel = 0.0;
         }
     }
 }
@@ -41,3 +41,18 @@ void Bank::applyInterest() {
     loanAmount += loanAmount * (interestRate / 100.0);
 }
 
+
+void Bank::conductAudit() {
+    if (detectFraud()) {
+        fraudDetected = true;
+        corruptionLevel *= 0.7;
+    }
+}
+
+bool Bank::detectFraud() {
+    double fraudThreshold = 1000.0 - (corruptionLevel * 500);
+    if (treasuryBalance < fraudThreshold || corruptionLevel > 0.8) {
+        return true;
+    }
+    return false;
+}
