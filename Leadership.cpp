@@ -6,10 +6,10 @@ Leadership::Leadership(const string& name) {
 }
 void Leadership::update(Kingdom& kingdom) {
 	if (leadershipStyle == 0) { 
-		popularity -= 0.1; //decreases popularity of leader in autocratic systems
+		popularity -= 0.1; //autocratic systems
 	}
 	else { 
-		popularity += 0.1; //increases popularity of leader in democratic systems
+		popularity += 0.1; //democratic systems
 	}
 	if (popularity < 0) {
 		popularity = 0;
@@ -32,7 +32,7 @@ void Leadership::initiateCoup(Kingdom& kingdom) {
 }
 void Leadership::changeLeader(const string& newName, int style) {
 	leaderName = newName;
-	leadershipStyle = style;//autocratic or democratic
+	leadershipStyle = style;//0:autocratic  1:democratic
 	popularity = 50.0;
 }
 void Leadership::affectPopularity(double amount) {
