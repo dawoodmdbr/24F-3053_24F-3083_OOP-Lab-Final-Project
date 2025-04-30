@@ -43,6 +43,7 @@ private:
     double popularity;
 
 public:
+    Leadership();
     Leadership(const string& name);
     void update(Kingdom& kingdom);
     void holdElection(Kingdom& kingdom);
@@ -102,34 +103,35 @@ public:
     double getGoldReserve() const;
 };
 
-class Bank {
-private:
-    double loanAmount;
-    double interestRate;
-    double treasuryBalance;
-    bool fraudDetected;
-
-public:
-    Bank();
-    void update(Kingdom& kingdom);
-    void issueLoan(double a);
-    void repayLoan(double a);
-    void auditTreasury();
-    void detectFraud();
-    void applyInterest();
-};
-
 class Corruption {
 protected:
     double corruptionLevel;
 
 public:
     Corruption();
+    void update(Kingdom& kingdom);
     void increaseCorruption(double amount);
     void decreaseCorruption(double amount);
     double getCorruptionLevel() const;
     bool isCorrupted() const;
 };
+
+class Bank : public Corruption {
+    private:
+        double loanAmount;
+        double interestRate;
+        double treasuryBalance;
+        bool fraudDetected;
+    
+    public:
+        Bank();
+        void update(Kingdom& kingdom);
+        void issueLoan(double a);
+        void repayLoan(double a);
+        void auditTreasury();
+        void detectFraud();
+        void applyInterest();
+    };
 
 class Military : public Corruption {
 private:
@@ -173,13 +175,14 @@ public:
     EventManager();
     void update(Kingdom& kingdom);
     void generateRandomEvent();
+    void getLatestEvent() const;
     void applyEvent(Event& event);
     void handleEvent(Kingdom& kingdom, Event& event);
 };
 
 
 class Kingdom {
-private:
+public:
     Population population;
     Leadership leadership;
     Economy economy;
@@ -189,7 +192,7 @@ private:
     EventManager eventManager;
     Corruption corruption;
 
-public:
+
     Kingdom();
     void update();
     void checkFinancialHealth();

@@ -43,6 +43,46 @@ void EventManager::generateRandomEvent() {
     events[eventCount++] = Event(type, description, impact);
     cout << "New event generated: " << description << " [Impact: " << impact << "]\n";
 }
+void EventManager::handleEvent(Kingdom& kingdom, Event& event) {
+    cout << "Handling event: " << event.getDescription() << "\n";
+    // Example handling logic
+    switch (event.getType()) {
+        case PLAGUE:
+            kingdom.getPopulation().affectHealth(-event.getImpact());
+            break;
+        case FAMINE:
+            kingdom.getEconomy().adjustTaxRate(-0.1 * event.getImpact() / 100.0);
+            break;
+        case REBELLION:
+            kingdom.getLeadership().initiateCoup(kingdom);
+            break;
+        case DISCOVERY_OF_GOLD:
+            kingdom.getBank().issueLoan(event.getImpact());
+            break;
+        case NATURAL_DISASTER:
+            kingdom.getPopulation().affectHealth(-event.getImpact());
+            break;
+        default:
+            cout << "Unknown event type.\n";
+            break;
+    }
+}
+void EventManager::getLatestEvent() const {
+    if (eventCount == 0) {
+        cout << "No events available.\n";
+        return;
+    }
+    Event latestEvent = events[eventCount - 1];
+    cout << "Latest event: " << latestEvent.getDescription() << " [Impact: " << latestEvent.getImpact() << "]\n";
+}
+void EventManager::update(Kingdom& kingdom) {
+    cout << "Updating event manager...\n";
+    // Example: Check if any events need to be applied
+    if (eventCount > 0) {
+        Event latestEvent = events[eventCount - 1];
+        applyEvent(latestEvent);
+    }
+}
 
 void EventManager::applyEvent(Event& event) {
     cout << "Applying event...\n";

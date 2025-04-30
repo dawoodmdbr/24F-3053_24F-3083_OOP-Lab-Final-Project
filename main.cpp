@@ -56,6 +56,7 @@ int main() {
             }
 
             case 4: {
+
                 cout << "\n--- Population Status ---" << endl;
                 for (int i = 0; i < SOCIAL_CLASS_COUNT; ++i) {
                     cout << "Class " << i << " - Count: " 

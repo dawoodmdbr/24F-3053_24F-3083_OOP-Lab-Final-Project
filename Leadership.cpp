@@ -1,4 +1,9 @@
 #include "Stronghold.h"
+Leadership::Leadership() {
+	leaderName = "Leader"; 
+	leadershipStyle = 0; 
+	popularity = 50.0; 
+}
 Leadership::Leadership(const string& name) {
 	leaderName = name;
 	leadershipStyle = 0; 
