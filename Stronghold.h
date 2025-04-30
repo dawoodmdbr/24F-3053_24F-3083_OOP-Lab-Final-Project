@@ -60,6 +60,7 @@ private:
 
 public:
     Resource();
+    void update(Kingdom& kingdom);
     Resource(ResourceType type, double a);
     void gather(double a);
     void consume(double a);
@@ -75,6 +76,7 @@ private:
 
 public:
     ResourceManager();
+    void update(Kingdom& kingdom);
     void gather(ResourceType type, int a);
     void consume(ResourceType type, int a);
     void trade(ResourceType fromType, ResourceType toType, int a);
@@ -108,11 +110,15 @@ private:
 
 public:
     Bank();
+    void update(Kingdom& kingdom);
     void issueLoan(double a);
     void repayLoan(double a);
     void auditTreasury();
     void detectFraud();
     void applyInterest();
+    double getTreasuryBalance() const;
+    double getLoanAmount() const;
+    bool isFraudDetected() const;
 };
 
 class Military {
@@ -124,10 +130,13 @@ private:
 
 public:
     Military();
+    void update(Kingdom& kingdom);
     void recruitSoldiers(int count);
     void paySoldiers();
     void trainSoldiers(int count);
     void manageMorale();
+    int getSoldierCount() const;
+    double getMorale() const;
 };
 
 class Event {
@@ -138,7 +147,10 @@ private:
 public:
     Event();
     Event(string description, int impact);
+    void update(Kingdom& kingdom);
     void triggerEvent();
+    string getDescription() const;
+    int getImpact() const;
 };
 
 class EventManager {
@@ -148,6 +160,7 @@ private:
 
 public:
     EventManager();
+    void update(Kingdom& kingdom);
     void generateRandomEvent();
     void applyEvent(Event& event);
 };
@@ -161,6 +174,7 @@ public:
     void applyCorruption(double a);
     void removeCorruption();
     bool isCorrupted() const;
+    double getCorruptionLevel() const;
 };
 
 class Audit {
@@ -187,6 +201,14 @@ public:
     void update();
     void checkFinancialHealth();
     void handleEvents();
+    Population& getPopulation();
+    Leadership& getLeadership();
+    Economy& getEconomy();
+    Bank& getBank();
+    Military& getMilitary();
+    ResourceManager& getResourceManager();
+    EventManager& getEventManager();
+    Corruption& getCorruption();
 };
 
 #endif
