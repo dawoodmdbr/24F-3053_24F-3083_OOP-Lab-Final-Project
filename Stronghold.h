@@ -42,6 +42,25 @@ struct SocialGroup
 
 class Kingdom;
 
+class Bank : public Corruption
+{
+private:
+    double loanAmount;
+    double interestRate;
+    double treasuryBalance;
+    bool fraudDetected;
+
+public:
+    Bank();
+    Bank(double loan, double interest, double balance);
+    void setLoanAmount(double a);
+    void update(Kingdom &kingdom);
+    void issueLoan(double a);
+    void repayLoan(double a);
+    void auditTreasury();
+    void detectFraud();
+    void applyInterest();
+};
 
 class Corruption
 {
@@ -57,26 +76,6 @@ public:
     double getCorruptionLevel() const;
     bool isCorrupted() const;
 };
-
-
-class Bank : public Corruption {
-private:
-    double loanAmount;
-    double interestRate;
-    double treasuryBalance;
-    bool fraudDetected;
-
-public:
-    Bank();
-    void setLoanAmount(double a);
-    void update(Kingdom &kingdom);
-    void issueLoan(double a);
-    void repayLoan(double a);
-    void auditTreasury();
-    void detectFraud();
-    void applyInterest();
-};
-
 
 class Economy
 {
