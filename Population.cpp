@@ -1,10 +1,11 @@
 #include "Stronghold.h"
 
 Population::Population() {
-    groups[PEASANT] = {PEASANT, 1000, 50.0};
-    groups[MERCHANT] = {MERCHANT, 500, 60.0};
+    groups[PEASANT] = {PEASANT, 150, 50.0};
+    groups[MERCHANT] = {MERCHANT, 200, 60.0};
     groups[NOBLE] = {NOBLE, 100, 80.0};
     groups[SOLDIER] = {SOLDIER, 200, 40.0};
+    groups[CIVILAN] = {CIVILAN, 700, 70.0};
     
     growthRate = 0.05;
     health = 75.0;
@@ -24,11 +25,11 @@ int Population::getTotalPopulation() const {
     return total;
 }
 
-void Population::adjustHappiness(SocialClass sClass, double amount) {
-    if (sClass >= 0 && sClass < SOCIAL_CLASS_COUNT) {
-        groups[sClass].happiness += amount;
-    }
+void Population::adjustHappiness(SocialClass type, double delta) {
+    happiness[type] += delta;
+    happiness[type] = max(0.0, min(happiness[type], 100.0));  // Clamp
 }
+
 
 void Population::addPopulation(SocialClass sClass, int count) {
     if (sClass >= 0 && sClass < SOCIAL_CLASS_COUNT) {

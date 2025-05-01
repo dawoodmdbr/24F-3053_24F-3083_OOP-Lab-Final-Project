@@ -12,6 +12,7 @@ enum SocialClass
     MERCHANT,
     NOBLE,
     SOLDIER,
+    CIVILAN,
     SOCIAL_CLASS_COUNT
 };
 enum ResourceType
@@ -42,8 +43,23 @@ struct SocialGroup
 
 class Kingdom;
 
-class Bank : public Corruption
+
+class Corruption
 {
+protected:
+    double corruptionLevel;
+
+public:
+    Corruption();
+    Corruption(double initialCorruption);
+    void update(Kingdom &kingdom);
+    void increaseCorruption(double amount);
+    void decreaseCorruption(double amount);
+    double getCorruptionLevel() const;
+    bool isCorrupted() const;
+};
+
+class Bank : public Corruption {
 private:
     double loanAmount;
     double interestRate;
@@ -62,23 +78,8 @@ public:
     void applyInterest();
 };
 
-class Corruption
-{
-protected:
-    double corruptionLevel;
 
-public:
-    Corruption();
-    Corruption(double initialCorruption);
-    void update(Kingdom &kingdom);
-    void increaseCorruption(double amount);
-    void decreaseCorruption(double amount);
-    double getCorruptionLevel() const;
-    bool isCorrupted() const;
-};
-
-class Economy
-{
+class Economy {
 private:
     double taxRate;
     double inflationRate;
@@ -146,6 +147,7 @@ public:
     void affectPopularity(double a);
     string getLeaderName() const;
     int getLeadershipStyle() const;
+    int getLeadershipLevel() const;
     double getPopularity() const;
 };
 
@@ -175,12 +177,13 @@ class Population
 private:
     SocialGroup groups[SOCIAL_CLASS_COUNT];
     double growthRate;
+    double happiness[SOCIAL_CLASS_COUNT];
     double health;
 
 public:
     Population();
     void update(Kingdom &kingdom);
-    void adjustHappiness(SocialClass sClass, double amount);
+    void adjustHappiness(SocialClass type, double delta);
     void addPopulation(SocialClass sClass, int count);
     bool removePopulation(SocialClass sClass, int count);
     int getCount(SocialClass sClass) const;

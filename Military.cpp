@@ -1,5 +1,11 @@
 #include "Stronghold.h"
-Military::Military() : soldierCount(0), morale(50.0), foodRequired(0.0), payRequired(0.0) {}
+Military::Military(){
+    soldierCount = 100;
+    morale = 50.0;
+    foodRequired = 0.0;
+    payRequired = 0.0;
+    corruptionLevel = 0.0;
+}
 void Military::recruitSoldiers(int count) {
     if (count > 0) {
         soldierCount += count;

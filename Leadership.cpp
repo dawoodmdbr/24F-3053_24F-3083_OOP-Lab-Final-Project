@@ -59,4 +59,7 @@ double Leadership::getPopularity() const {
 	return popularity;
 }
 
+int Leadership::getLeadershipLevel() const {
+	return static_cast<int>(popularity / 20); 
+}
 
