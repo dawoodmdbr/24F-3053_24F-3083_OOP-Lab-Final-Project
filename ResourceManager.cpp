@@ -32,3 +32,5 @@ void ResourceManager::update(Kingdom& kingdom) {
         resources[i].update(kingdom);
     }
 }
+
+

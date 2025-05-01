@@ -27,7 +27,7 @@ int Population::getTotalPopulation() const {
 
 void Population::adjustHappiness(SocialClass type, double delta) {
     happiness[type] += delta;
-    happiness[type] = max(0.0, min(happiness[type], 100.0));  // Clamp
+    happiness[type] = max(0.0, min(happiness[type], 100.0));  
 }
 
 

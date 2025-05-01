@@ -35,7 +35,7 @@ enum EventType {
     DRAGON_SIGHTING,
     COMEDY_FESTIVAL,
     ASTRONOMICAL_EVENT,
-    EVENT_TYPE_COUNT  // This should be last
+    EVENT_TYPE_COUNT  
 };
 
 
@@ -165,11 +165,11 @@ private:
     double morale;
     double foodRequired;
     double payRequired;
-
+    int trainedSoldiers;
 public:
     Military();
     void update(Kingdom &kingdom);
-    void recruitSoldiers(int count);
+    void recruitSoldiers();
     void paySoldiers();
     void trainSoldiers(int count);
     void manageMorale();

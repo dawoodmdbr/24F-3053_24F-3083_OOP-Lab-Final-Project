@@ -11,17 +11,14 @@ void Economy::adjustTaxRate(double rate) {
     }
 
     taxRate = rate;
-
-    // Update inflation based on tax rate (example logic)
     if (rate > 0.7) {
-        inflationRate -= 0.5;  // High taxes reduce inflation
+        inflationRate -= 0.5;  
     } else if (rate < 0.3) {
-        inflationRate += 0.5;  // Low taxes can overheat economy
+        inflationRate += 0.5;  
     } else {
-        inflationRate += 0.1;  // Normal mild inflation
+        inflationRate += 0.1;  
     }
 
-    // Clamp inflation
     inflationRate = max(0.0, min(inflationRate, 20.0));
 
     cout << "Tax rate set to " << taxRate * 100 << "%.\n";
@@ -30,7 +27,6 @@ void Economy::adjustTaxRate(double rate) {
 
 
 void Economy::update(Kingdom& kingdom) {
-    // Simulate economy changes: e.g., tax income from population
     double income = kingdom.getPopulation().getTotalPopulation() * taxRate * 0.1;
     goldReserve += income;
 }
@@ -38,14 +34,12 @@ void Economy::adjustInflation(double a) {
     inflationRate = a;
 }
 void Economy::tradeResources() {
-    // Simulate trading resources with other kingdoms
-    // For simplicity, let's say we gain some gold from trade
-    goldReserve += 500.0; // Example trade income
+    
+    
+    goldReserve += 500.0; 
 }
 void Economy::fundPublicServices() {
-    // Simulate funding public services
-    // For simplicity, let's say we spend some gold on public services
-    goldReserve -= 200.0; // Example expense for public services
+    goldReserve -= 200.0; 
 }
 double Economy::getInflation() const {
     return inflationRate;

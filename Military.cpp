@@ -1,4 +1,5 @@
 #include "Stronghold.h"
+#include<iostream>
 Military::Military(){
     soldierCount = 100;
     morale = 50.0;
@@ -6,15 +7,23 @@ Military::Military(){
     payRequired = 0.0;
     corruptionLevel = 0.0;
 }
-void Military::recruitSoldiers(int count) {
-    if (count > 0) {
-        soldierCount += count;
-        foodRequired += count * 1.5; 
-        payRequired += count * 2.0; 
-        morale -= count * 0.1;      
-        increaseCorruption(count * 0.2); 
-        if (morale < 0.0) morale = 0.0;
+void Military::recruitSoldiers() {  
+    int randomRecruits = rand() % 21 + 10; 
+    soldierCount += randomRecruits;
+    cout<< randomRecruits << " soldiers were recruited in this attempt.\n";
+}
+void Military::trainSoldiers(int count) {
+    if (count <= 0) {
+        cout << "Cannot train zero or negative soldiers!\n";
+        return;
     }
+    if (count > soldierCount) {
+        cout << "Not enough soldiers available to train!\n";
+        return;
+    }
+    morale = min(1.0, morale + (count * 0.01));
+    cout << count << " soldiers completed basic training.\n";
+    cout << "Morale improved to " << (morale * 100) << "%\n";
 }
 void Military::update(Kingdom& kingdom) {
     manageMorale(); 
@@ -37,13 +46,6 @@ void Military::paySoldiers() {
         morale -= 5.0; 
         increaseCorruption(5.0); 
         if (morale < 0.0) morale = 0.0;
-    }
-}
-void Military::trainSoldiers(int count) {
-    if (count > 0 && count <= soldierCount) {
-        morale += count * 0.5; 
-        decreaseCorruption(count * 0.3); 
-        if (morale > 100.0) morale = 100.0; 
     }
 }
 void Military::manageMorale() {

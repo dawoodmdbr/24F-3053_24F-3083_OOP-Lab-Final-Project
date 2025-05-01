@@ -6,7 +6,7 @@
 using namespace std;
 
 EventManager::EventManager() : eventCount(0) {
-    srand(time(0)); // Seed random number generator
+    srand(time(0)); 
 }
 
 void EventManager::generateRandomEvent() {
@@ -17,7 +17,7 @@ void EventManager::generateRandomEvent() {
 
     EventType type = static_cast<EventType>(rand() % EVENT_TYPE_COUNT);
     string description;
-    int impact = rand() % 21 + 10; // 10 to 30 impact
+    int impact = rand() % 21 + 10; 
 
     switch (type) {
         case PLAGUE:
@@ -63,34 +63,53 @@ void EventManager::handleEvent(Kingdom& kingdom, Event& event) {
     cout << "Handling event: " << event.getDescription() << "\n";
     switch (event.getType()) {
         case PLAGUE:
-            kingdom.getPopulation().affectHealth(-event.getImpact());
+            kingdom.getPopulation().affectHealth(-0.3);
+            kingdom.getResourceManager().consume(FOOD, 300);
             break;
         case FAMINE:
-            kingdom.getEconomy().adjustTaxRate(-0.1 * event.getImpact() / 100.0);
+            kingdom.getResourceManager().consume(FOOD,
+                kingdom.getResourceManager().get(FOOD) * 0.5);
+            kingdom.getPopulation().adjustHappiness(PEASANT, -0.4);
             break;
         case REBELLION:
-            kingdom.getLeadership().initiateCoup(kingdom);
+            kingdom.getMilitary().recruitSoldiers(); 
+            kingdom.getPopulation().adjustHappiness(PEASANT, -0.3);
+            kingdom.getPopulation().adjustHappiness(CIVILAN, -0.2);
             break;
         case DISCOVERY_OF_GOLD:
-            kingdom.getBank().issueLoan(event.getImpact());
+            kingdom.getResourceManager().gather(GOLD, 500);
+            kingdom.getEconomy().adjustTaxRate(-0.05); 
             break;
         case NATURAL_DISASTER:
-            kingdom.getPopulation().affectHealth(-event.getImpact());
+            kingdom.getResourceManager().consume(WOOD, 200);
+            kingdom.getResourceManager().consume(STONE, 100);
+            kingdom.getPopulation().adjustHappiness(CIVILAN, -0.15);
             break;
         case TAX_EVASION_SCANDAL:
-            kingdom.getBank().deductGold(event.getImpact());
+            kingdom.getLeadership().affectPopularity(-0.2);
+            kingdom.getEconomy().adjustTaxRate(0.03); 
             break;
         case MERCHANTS_STRIKE:
-            kingdom.getResourceManager().haltResource(ResourceType::Gold, 2);  // example method
+            kingdom.getResourceManager().consume(GOLD,
+                kingdom.getResourceManager().get(GOLD) * 0.3); 
+            kingdom.getPopulation().adjustHappiness(MERCHANT, -0.25);
             break;
+
         case DRAGON_SIGHTING:
-            kingdom.getMilitary().increaseReadiness(10);
+            kingdom.getMilitary().recruitSoldiers(); 
+            kingdom.getMilitary().manageMorale(); 
+            kingdom.getResourceManager().consume(FOOD, 100); 
             break;
         case COMEDY_FESTIVAL:
-            kingdom.getPopulation().adjustHappiness(AllClasses, +5);
+            for (int i = 0; i < SOCIAL_CLASS_COUNT; i++) {
+                SocialClass sc = static_cast<SocialClass>(i);
+                kingdom.getPopulation().adjustHappiness(sc, 0.15);
+            }
+            kingdom.getResourceManager().consume(GOLD, 200); 
             break;
         case ASTRONOMICAL_EVENT:
-            kingdom.getLeadership().gainWisdom(3);
+            kingdom.getLeadership().affectPopularity(0.1);
+            kingdom.getPopulation().adjustHappiness(NOBLE, 0.2);
             break;
         default:
             cout << "Unknown event type.\n";
@@ -100,10 +119,10 @@ void EventManager::handleEvent(Kingdom& kingdom, Event& event) {
 
 Event EventManager::getLatestEvent() const {
     if (eventCount > 0) {
-        return events[eventCount - 1]; // Return the latest event
+        return events[eventCount - 1]; 
     } else {
         cout << "No events available.\n";
-        return Event(); // Return a default event if none exist
+        return Event(); 
     }
 }
 void EventManager::applyEvent(Event& event) {
@@ -113,7 +132,6 @@ void EventManager::applyEvent(Event& event) {
 }
 
 void EventManager::update(Kingdom& kingdom) {
-    // Update logic for events, if needed
     for (int i = 0; i < eventCount; ++i) {
         events[i].update(kingdom);
     }

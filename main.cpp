@@ -8,49 +8,58 @@ using namespace std;
 
 
 void militaryMenu(Kingdom& kingdom) {
-    int choice;
-    cout << "\nMilitary Menu\n";
-    cout << "1. Recruit Soldiers\n";
-    cout << "2. View Soldier Count\n";
-    cout << "3. Train Soldiers\n";
-    cout << "4. View Training Status\n";
-    cout << "5. View Military Strength\n";
-    cout << "0. Back to Main Menu\n";
-    cout << "Choice: ";
-    cin >> choice;
+    Military& military = kingdom.getMilitary();
 
-    switch (choice) {
-        case 1: {
-            int soldiers;
-            cout << "Enter number of soldiers to recruit: ";
-            cin >> soldiers;
-            if (soldiers > 0)
-                kingdom.getMilitary().recruitSoldiers(soldiers);
-            else
-                cout << "Invalid number.\n";
+    while (true) {
+        cout << "\nMilitary Menu" << endl;
+        cout << "1. Attempt Recruitment\n"; 
+        cout << "2. View Soldier Count\n";
+        cout << "3. Train Soldiers\n";
+        cout << "4. View Morale\n";
+        cout << "0. Back to Main Menu\n";
+        cout << "Choice: ";
+
+        int choice;
+        cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore();
+            cout << "Invalid input\n";
+            continue;
+        }
+
+        switch (choice) {
+        case 1:
+            military.recruitSoldiers();  
+            break;
+
+        case 2:
+            cout << "Total soldiers: " << military.getSoldierCount() << endl;
+            break;
+
+        case 3: {
+            cout << "Available soldiers: " << military.getSoldierCount() << endl;
+            cout << "Enter number to train: ";
+            int num;
+            cin >> num;
+            military.trainSoldiers(num);
             break;
         }
-        case 2:
-            cout << "Current soldiers: " << kingdom.getMilitary().getSoldierCount() << endl;
-            break;
-        case 3:
-            int trainCount;
-            cout << "Enter number of soldiers to train: ";
-            cin >> trainCount;
-            if (trainCount > 0)
-                kingdom.getMilitary().trainSoldiers(trainCount);
-            else
-                cout << "Invalid number.\n";
-            break;
         case 4:
-            cout << "Training status: " << kingdom.getMilitary().getMorale() << endl;
+            cout << "Current morale: " << (military.getMorale() * 100) << "%\n";
             break;
-        case 5:
-            cout << "Military strength: " << kingdom.getMilitary().getSoldierCount() * kingdom.getMilitary().getMorale() << endl;
-            break;
-        case 0: return;
+
+        case 0:
+            return;
+
         default:
-            cout << "Invalid choice.\n";
+            cout << "Invalid choice\n";
+        }
+
+        cout << "Press Enter to continue...";
+        cin.ignore();
+        cin.get();
     }
 }
 
@@ -139,12 +148,138 @@ void populationMenu(Kingdom& kingdom) {
 }
 
 void leadershipMenu(Kingdom& kingdom) {
-    cout << "\nLeadership Overview\n";
-    cout << "Leader Name: " << kingdom.getLeadership().getLeaderName() << endl;
-    cout << "Leadership Level: " << kingdom.getLeadership().getLeadershipLevel() << endl;
-}
+    Leadership& leadership = kingdom.getLeadership();
+    Population& population = kingdom.getPopulation();
 
-// Events
+    auto clampPercent = [](double value) {
+        return max(0.0, min(100.0, value * 100));
+        };
+
+    while (true) {
+        cout << "\n=== Leadership Menu " << endl;
+        cout << "1. Leader Overview\n";
+        cout << "2. Hold Election\n";
+        cout << "3. Initiate Coup\n";
+        cout << "4. Change Leader\n";
+        cout << "5. View Popularity Effects\n";
+        cout << "6. Return to Main Menu\n";
+        cout << "Choice: ";
+
+        int choice;
+        cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number.\n";
+            continue;
+        }
+
+        switch (choice) {
+        case 1: {
+            cout << "\n--- LEADER STATS ---\n";
+            cout << "Name: " << leadership.getLeaderName() << endl;
+            cout << "Style: ";
+            switch (leadership.getLeadershipStyle()) {
+            case 0: cout << "Benevolent"; break;
+            case 1: cout << "Neutral"; break;
+            case 2: cout << "Tyrannical"; break;
+            default: cout << "Unknown"; break;
+            }
+            cout << "\nLevel: " << leadership.getLeadershipLevel() << endl;
+            cout << "Popularity: " << clampPercent(leadership.getPopularity()) << "%\n";
+
+            cout << "\nCLASS HAPPINESS:\n";
+            cout << "- Peasants: " << clampPercent(population.getHappiness(PEASANT)) << "%\n";
+            cout << "- Merchants: " << clampPercent(population.getHappiness(MERCHANT)) << "%\n";
+            cout << "- Nobles: " << clampPercent(population.getHappiness(NOBLE)) << "%\n";
+            cout << "- Soldiers: " << clampPercent(population.getHappiness(SOLDIER)) << "%\n";
+            cout << "- Civilians: " << clampPercent(population.getHappiness(CIVILAN)) << "%\n";
+            break;
+        }
+
+        case 2: {
+            cout << "\nHolding elections...\n";
+            leadership.holdElection(kingdom);
+
+            double popChange = (rand() % 30 - 10) / 100.0; 
+            leadership.affectPopularity(popChange);
+
+            cout << "New leader: " << leadership.getLeaderName() << endl;
+            cout << "Popularity " << (popChange >= 0 ? "+" : "")
+                << clampPercent(popChange) << "%\n";
+            break;
+        }
+
+        case 3: {
+            if (leadership.getPopularity() < 0.3) {
+                cout << "\nInitiating coup...\n";
+                leadership.initiateCoup(kingdom);
+
+                population.adjustHappiness(SOLDIER, 0.15);
+                population.adjustHappiness(PEASANT, -0.1);
+                cout << "Coup successful! New leader: "
+                    << leadership.getLeaderName() << endl;
+            }
+            else {
+                cout << "\nThe people still support the current leader!\n";
+                cout << "Coup attempt failed (-15% popularity).\n";
+                leadership.affectPopularity(-0.15);
+            }
+            break;
+        }
+
+        case 4: {
+            cout << "\nEnter new leader name: ";
+            string newName;
+            cin.ignore();
+            getline(cin, newName);
+
+            cout << "Select leadership style:\n";
+            cout << "0 - Benevolent\n1 - Neutral\n2 - Tyrannical\n";
+            cout << "Choice: ";
+            int style;
+            cin >> style;
+
+            if (style >= 0 && style <= 2) {
+                leadership.changeLeader(newName, style);
+                cout << "New leader appointed: " << newName << endl;
+
+                double popEffect = (style == 0) ? 0.1 :
+                    (style == 2) ? -0.1 : 0.0;
+                leadership.affectPopularity(popEffect);
+            }
+            else {
+                cout << "Invalid style selection.\n";
+            }
+            break;
+        }
+
+        case 5: {
+            cout << "\nPopularity Menu\n";
+            cout << "Current: " << clampPercent(leadership.getPopularity()) << "%\n";
+            cout << "Effects:\n";
+            cout << "- Tax collection efficiency: "
+                << clampPercent(leadership.getPopularity() * 0.2) << "%\n";
+            cout << "- Military morale: +"
+                << clampPercent(leadership.getPopularity() * 0.15) << "%\n";
+            cout << "- Rebellion risk: "
+                << clampPercent((1.0 - leadership.getPopularity()) * 0.5) << "%\n";
+            break;
+        }
+
+        case 6:
+            return;
+
+        default:
+            cout << "Invalid choice.\n";
+        }
+
+        cout << "\nPress Enter to continue...";
+        cin.ignore();
+        cin.get();
+    }
+}
 
 void randomEvent(Kingdom& kingdom) {
     int eventRoll = rand() % 5;
@@ -160,7 +295,7 @@ void randomEvent(Kingdom& kingdom) {
             break;
         case 2:
             cout << "\nA rival kingdom attacks. You lose 20 soldiers.\n";
-            kingdom.getMilitary().recruitSoldiers(-20);
+            kingdom.getMilitary().recruitSoldiers();
             break;
         case 3:
             cout << "\nThe economy booms. You gain 300 gold.\n";
@@ -173,7 +308,6 @@ void randomEvent(Kingdom& kingdom) {
     }
 }
 
-// Main Menu
 
 void displayMainMenu() {
     cout << "\nStronghold Management\n";
@@ -188,7 +322,7 @@ void displayMainMenu() {
 }
 
 int main() {
-    srand(time(0)); // For random events
+    srand(time(0)); 
 
     Kingdom myKingdom;
     int mainChoice;
@@ -223,7 +357,7 @@ int main() {
         }
 
         system("pause");
-        system("cls"); // Use "clear" for Linux/Mac
+        system("cls"); 
     }
 
     return 0;

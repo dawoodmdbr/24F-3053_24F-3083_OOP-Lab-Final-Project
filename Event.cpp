@@ -44,12 +44,9 @@ int Event::getImpact() const {
 }
 
 void Event::update(Kingdom& kingdom) {
-    // Update the event based on the kingdom's state
-    // For example, if the kingdom is in a bad state, increase the impact of the event
     if (kingdom.getPopulation().getOverallHappiness() < 50) {
         impact += 10;
     }
-    // Trigger the event if certain conditions are met
     if (impact > 50) {
         triggerEvent();
     }

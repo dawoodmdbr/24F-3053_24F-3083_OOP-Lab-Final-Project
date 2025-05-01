@@ -25,7 +25,7 @@ void Kingdom::update() {
 }
 
 void Kingdom::checkFinancialHealth() {
-    // Example: Check if the kingdom's economy is in good shape
+  
     if (economy.getGoldReserve() < 1000.0) {
         cout << "Warning: Low gold reserve!" << endl;
     }
@@ -36,9 +36,7 @@ void Kingdom::checkFinancialHealth() {
 
 void Kingdom::handleEvents() {
     eventManager.generateRandomEvent();
-
-    // Safe way: Handle only the latest event
-    Event latestEvent = eventManager.getLatestEvent(); // Ensure this getter exists in EventManager
+    Event latestEvent = eventManager.getLatestEvent(); 
     eventManager.applyEvent(latestEvent);
     eventManager.handleEvent(*this, latestEvent);
 }

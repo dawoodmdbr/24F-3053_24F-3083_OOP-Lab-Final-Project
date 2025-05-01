@@ -2,7 +2,6 @@
 Corruption::Corruption() : corruptionLevel(10.0) {}
 
 void Corruption::update(Kingdom& kingdom) {
-    // Example: Increase corruption based on the kingdom's financial health
     if (kingdom.getEconomy().getGoldReserve() < 1000.0) {
         increaseCorruption(5.0);
     } else {
