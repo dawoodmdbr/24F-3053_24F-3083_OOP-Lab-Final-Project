@@ -61,3 +61,12 @@ void Bank::auditTreasury() {
 void Bank::applyInterest() {
     loanAmount += loanAmount * (interestRate / 100.0);
 }
+void Bank::deductGold(double amount) {
+    if (amount <= 0 || amount > treasuryBalance) {
+        return;
+    }
+    treasuryBalance -= amount;
+    if (treasuryBalance < 0) {
+        treasuryBalance = 0;
+    }
+}

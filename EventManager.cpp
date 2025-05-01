@@ -17,7 +17,7 @@ void EventManager::generateRandomEvent() {
 
     EventType type = static_cast<EventType>(rand() % EVENT_TYPE_COUNT);
     string description;
-    int impact = rand() % 21 + 10; // Random impact between 10 and 30
+    int impact = rand() % 21 + 10; // 10 to 30 impact
 
     switch (type) {
         case PLAGUE:
@@ -35,6 +35,21 @@ void EventManager::generateRandomEvent() {
         case NATURAL_DISASTER:
             description = "A terrible natural disaster has struck.";
             break;
+        case TAX_EVASION_SCANDAL:
+            description = "Nobles caught hiding wealth in offshore vaults.";
+            break;
+        case MERCHANTS_STRIKE:
+            description = "Merchants halt trade demanding lower tariffs.";
+            break;
+        case DRAGON_SIGHTING:
+            description = "A dragon was seen in the mountains. Panic spreads.";
+            break;
+        case COMEDY_FESTIVAL:
+            description = "A traveling troupe hosts a comedy festival. Laughter everywhere.";
+            break;
+        case ASTRONOMICAL_EVENT:
+            description = "A rare comet lights the sky. Peasants think it’s magic.";
+            break;
         default:
             description = "An unknown event occurred.";
             break;
@@ -43,9 +58,9 @@ void EventManager::generateRandomEvent() {
     events[eventCount++] = Event(type, description, impact);
     cout << "New event generated: " << description << " [Impact: " << impact << "]\n";
 }
+
 void EventManager::handleEvent(Kingdom& kingdom, Event& event) {
     cout << "Handling event: " << event.getDescription() << "\n";
-    // Example handling logic
     switch (event.getType()) {
         case PLAGUE:
             kingdom.getPopulation().affectHealth(-event.getImpact());
@@ -62,11 +77,27 @@ void EventManager::handleEvent(Kingdom& kingdom, Event& event) {
         case NATURAL_DISASTER:
             kingdom.getPopulation().affectHealth(-event.getImpact());
             break;
+        case TAX_EVASION_SCANDAL:
+            kingdom.getBank().deductGold(event.getImpact());
+            break;
+        case MERCHANTS_STRIKE:
+            kingdom.getResourceManager().haltResource(ResourceType::Gold, 2);  // example method
+            break;
+        case DRAGON_SIGHTING:
+            kingdom.getMilitary().increaseReadiness(10);
+            break;
+        case COMEDY_FESTIVAL:
+            kingdom.getPopulation().adjustHappiness(AllClasses, +5);
+            break;
+        case ASTRONOMICAL_EVENT:
+            kingdom.getLeadership().gainWisdom(3);
+            break;
         default:
             cout << "Unknown event type.\n";
             break;
     }
 }
+
 Event EventManager::getLatestEvent() const {
     if (eventCount > 0) {
         return events[eventCount - 1]; // Return the latest event

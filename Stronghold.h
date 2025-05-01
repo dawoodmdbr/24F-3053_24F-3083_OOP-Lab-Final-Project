@@ -24,15 +24,20 @@ enum ResourceType
     GOLD,
     RESOURCE_TYPE_COUNT
 };
-enum EventType
-{
+enum EventType {
     PLAGUE,
     FAMINE,
     REBELLION,
     DISCOVERY_OF_GOLD,
     NATURAL_DISASTER,
-    EVENT_TYPE_COUNT
+    TAX_EVASION_SCANDAL,
+    MERCHANTS_STRIKE,
+    DRAGON_SIGHTING,
+    COMEDY_FESTIVAL,
+    ASTRONOMICAL_EVENT,
+    EVENT_TYPE_COUNT  // This should be last
 };
+
 
 struct SocialGroup
 {
@@ -76,6 +81,7 @@ public:
     void auditTreasury();
     void detectFraud();
     void applyInterest();
+    void deductGold(double amount);
 };
 
 
