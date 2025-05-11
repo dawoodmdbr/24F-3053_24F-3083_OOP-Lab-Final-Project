@@ -1,3 +1,4 @@
+
 #include "Stronghold.h"
 #include <iostream>
 #include <limits>
@@ -12,7 +13,7 @@ void militaryMenu(Kingdom& kingdom) {
 
     while (true) {
         cout << "\nMilitary Menu" << endl;
-        cout << "1. Attempt Recruitment\n"; 
+        cout << "1. Attempt Recruitment\n";
         cout << "2. View Soldier Count\n";
         cout << "3. Train Soldiers\n";
         cout << "4. View Morale\n";
@@ -31,7 +32,7 @@ void militaryMenu(Kingdom& kingdom) {
 
         switch (choice) {
         case 1:
-            military.recruitSoldiers();  
+            military.recruitSoldiers();
             break;
 
         case 2:
@@ -75,28 +76,28 @@ void economyMenu(Kingdom& kingdom) {
     cin >> choice;
 
     switch (choice) {
-        case 1: {
-            double rate;
-            cout << "Enter new tax rate (0.0 - 1.0): ";
-            cin >> rate;
-            if (rate >= 0 && rate <= 1.0)
-                kingdom.getEconomy().adjustTaxRate(rate);
-            else
-                cout << "Invalid rate.\n";
-            break;
-        }
-        case 2:
-            cout << "Current tax rate: " << kingdom.getEconomy().getTaxRate() << endl;
-            break;
-        case 3:
-            cout << "Current corruption level: " << kingdom.getCorruption().getCorruptionLevel() << endl;
-            break;
-        case 4:
-            cout << "Current inflation rate: " << kingdom.getEconomy().getInflation() << endl;
-            break;
-        case 0: return;
-        default:
-            cout << "Invalid choice.\n";
+    case 1: {
+        double rate;
+        cout << "Enter new tax rate (0.0 - 1.0): ";
+        cin >> rate;
+        if (rate >= 0 && rate <= 1.0)
+            kingdom.getEconomy().adjustTaxRate(rate);
+        else
+            cout << "Invalid rate.\n";
+        break;
+    }
+    case 2:
+        cout << "Current tax rate: " << kingdom.getEconomy().getTaxRate() << endl;
+        break;
+    case 3:
+        cout << "Current corruption level: " << kingdom.getCorruption().getCorruptionLevel() << endl;
+        break;
+    case 4:
+        cout << "Current inflation rate: " << kingdom.getEconomy().getInflation() << endl;
+        break;
+    case 0: return;
+    default:
+        cout << "Invalid choice.\n";
     }
 }
 
@@ -110,31 +111,31 @@ void resourceMenu(Kingdom& kingdom) {
     cin >> choice;
 
     switch (choice) {
-        case 1: {
-            int resChoice, amount;
-            cout << "Select Resource to Gather:\n";
-            cout << "0. Food  1. Wood  2. Stone  3. Iron  4. Gold\n";
-            cin >> resChoice;
-            cout << "Enter amount to gather: ";
-            cin >> amount;
-            if (resChoice >= 0 && resChoice < RESOURCE_TYPE_COUNT && amount > 0)
-                kingdom.getResourceManager().gather(static_cast<ResourceType>(resChoice), amount);
-            else
-                cout << "Invalid input.\n";
-            break;
+    case 1: {
+        int resChoice, amount;
+        cout << "Select Resource to Gather:\n";
+        cout << "0. Food  1. Wood  2. Stone  3. Iron  4. Gold\n";
+        cin >> resChoice;
+        cout << "Enter amount to gather: ";
+        cin >> amount;
+        if (resChoice >= 0 && resChoice < RESOURCE_TYPE_COUNT && amount > 0)
+            kingdom.getResourceManager().gather(static_cast<ResourceType>(resChoice), amount);
+        else
+            cout << "Invalid input.\n";
+        break;
+    }
+    case 2: {
+        const char* resourceNames[] = { "Food", "Wood", "Stone", "Iron", "Gold" };
+        cout << "Current Resource Stockpile:\n";
+        for (int i = 0; i < RESOURCE_TYPE_COUNT; ++i) {
+            cout << resourceNames[i] << " - Amount: "
+                << kingdom.getResourceManager().get(static_cast<ResourceType>(i)) << endl;
         }
-        case 2: {
-            const char* resourceNames[] = { "Food", "Wood", "Stone", "Iron", "Gold" };
-            cout << "Current Resource Stockpile:\n";
-            for (int i = 0; i < RESOURCE_TYPE_COUNT; ++i) {
-                cout << resourceNames[i] << " - Amount: "
-                     << kingdom.getResourceManager().get(static_cast<ResourceType>(i)) << endl;
-            }
-            break;
-        }
-        case 0: return;
-        default:
-            cout << "Invalid choice.\n";
+        break;
+    }
+    case 0: return;
+    default:
+        cout << "Invalid choice.\n";
     }
 }
 
@@ -143,7 +144,7 @@ void populationMenu(Kingdom& kingdom) {
     cout << "\nPopulation Status\n";
     for (int i = 0; i < SOCIAL_CLASS_COUNT; ++i) {
         cout << classNames[i] << " - Count: " << kingdom.getPopulation().getCount(static_cast<SocialClass>(i))
-             << ", Happiness: " << kingdom.getPopulation().getHappiness(static_cast<SocialClass>(i)) << endl;
+            << ", Happiness: " << kingdom.getPopulation().getHappiness(static_cast<SocialClass>(i)) << endl;
     }
 }
 
@@ -202,7 +203,7 @@ void leadershipMenu(Kingdom& kingdom) {
             cout << "\nHolding elections...\n";
             leadership.holdElection(kingdom);
 
-            double popChange = (rand() % 30 - 10) / 100.0; 
+            double popChange = (rand() % 30 - 10) / 100.0;
             leadership.affectPopularity(popChange);
 
             cout << "New leader: " << leadership.getLeaderName() << endl;
@@ -280,31 +281,132 @@ void leadershipMenu(Kingdom& kingdom) {
         cin.get();
     }
 }
+void tradeMenu(Kingdom& kingdom) {
+    TradeSystem& trade = kingdom.getTradeSystem();
+    int choice;
+
+    while (true) {
+        cout << "\n=== TRADING CENTER ===" << endl;
+        cout << "1. View Market Prices" << endl;
+        cout << "2. Trade Resources" << endl;
+        cout << "3. Sell Resources for Gold" << endl;
+        cout << "0. Back to Main Menu" << endl;
+        cout << "Choice: ";
+
+        cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore();
+            cout << "Invalid input\n";
+            continue;
+        }
+
+        switch (choice) {
+        case 1: 
+            trade.displayMarket();
+            break;
+
+        case 2: { 
+            int give, receive, amount;
+
+            cout << "\nSelect resource to give:" << endl;
+            cout << "1. Food" << endl;
+            cout << "2. Wood" << endl;
+            cout << "3. Stone" << endl;
+            cout << "4. Iron" << endl;
+            cout << "Choice: ";
+            cin >> give;
+            give--; 
+
+            cout << "Amount to trade: ";
+            cin >> amount;
+
+            cout << "\nSelect resource to receive:" << endl;
+            cout << "1. Food" << endl;
+            cout << "2. Wood" << endl;
+            cout << "3. Stone" << endl;
+            cout << "4. Iron" << endl;
+            cout << "Choice: ";
+            cin >> receive;
+            receive--; 
+
+            if (give >= 0 && give <= 3 && receive >= 0 && receive <= 3) {
+                trade.executeTrade(kingdom,
+                    static_cast<ResourceType>(give),
+                    amount,
+                    static_cast<ResourceType>(receive));
+            }
+            else {
+                cout << "Invalid resource selection!\n";
+            }
+            break;
+        }
+
+        case 3: { 
+            int give, amount;
+
+            cout << "\nSelect resource to sell:" << endl;
+            cout << "1. Food" << endl;
+            cout << "2. Wood" << endl;
+            cout << "3. Stone" << endl;
+            cout << "4. Iron" << endl;
+            cout << "Choice: ";
+            cin >> give;
+            give--;
+
+            cout << "Amount to sell: ";
+            cin >> amount;
+
+            if (give >= 0 && give <= 3) {
+                trade.executeTrade(kingdom,
+                    static_cast<ResourceType>(give),
+                    amount,
+                    GOLD);
+            }
+            else {
+                cout << "Invalid resource selection!\n";
+            }
+            break;
+        }
+
+        case 0:
+            return;
+
+        default:
+            cout << "Invalid choice\n";
+        }
+
+        cout << "\nPress Enter to continue...";
+        cin.ignore();
+        cin.get();
+    }
+}
 
 void randomEvent(Kingdom& kingdom) {
     int eventRoll = rand() % 5;
 
     switch (eventRoll) {
-        case 0:
-            cout << "\nA bountiful harvest increases food by 200.\n";
-            kingdom.getResourceManager().gather(FOOD, 200);
-            break;
-        case 1:
-            cout << "\nA fire destroys 100 wood.\n";
-            kingdom.getResourceManager().gather(WOOD, -100);
-            break;
-        case 2:
-            cout << "\nA rival kingdom attacks. You lose 20 soldiers.\n";
-            kingdom.getMilitary().recruitSoldiers();
-            break;
-        case 3:
-            cout << "\nThe economy booms. You gain 300 gold.\n";
-            kingdom.getResourceManager().gather(GOLD, 300);
-            break;
-        case 4:
-            cout << "\nUnrest spreads. Happiness of peasants drops.\n";
-            kingdom.getPopulation().adjustHappiness(PEASANT, -10);
-            break;
+    case 0:
+        cout << "\nA bountiful harvest increases food by 200.\n";
+        kingdom.getResourceManager().gather(FOOD, 200);
+        break;
+    case 1:
+        cout << "\nA fire destroys 100 wood.\n";
+        kingdom.getResourceManager().gather(WOOD, -100);
+        break;
+    case 2:
+        cout << "\nA rival kingdom attacks. You lose 20 soldiers.\n";
+        kingdom.getMilitary().recruitSoldiers();
+        break;
+    case 3:
+        cout << "\nThe economy booms. You gain 300 gold.\n";
+        kingdom.getResourceManager().gather(GOLD, 300);
+        break;
+    case 4:
+        cout << "\nUnrest spreads. Happiness of peasants drops.\n";
+        kingdom.getPopulation().adjustHappiness(PEASANT, -10);
+        break;
     }
 }
 
@@ -316,14 +418,14 @@ void displayMainMenu() {
     cout << "3. Resources\n";
     cout << "4. Population\n";
     cout << "5. Leadership\n";
-    cout << "6. Next Turn\n";
+    cout << "6. Trade Center\n";
+    cout << "7. Next Turn\n";
     cout << "0. Exit Game\n";
     cout << "Select a category: ";
 }
 
 int main() {
-    srand(time(0)); 
-
+    srand(time(0));
     Kingdom myKingdom;
     int mainChoice;
     int turn = 1;
@@ -336,28 +438,29 @@ int main() {
         cin >> mainChoice;
 
         switch (mainChoice) {
-            case 1: militaryMenu(myKingdom); break;
-            case 2: economyMenu(myKingdom); break;
-            case 3: resourceMenu(myKingdom); break;
-            case 4: populationMenu(myKingdom); break;
-            case 5: leadershipMenu(myKingdom); break;
-            case 6:
-                cout << "\nProcessing Turn " << turn << "...\n";
-                myKingdom.update();
-                myKingdom.handleEvents();
-                randomEvent(myKingdom);
-                myKingdom.checkFinancialHealth();
-                ++turn;
-                break;
-            case 0:
-                cout << "\nExiting game. Thank you for playing.\n";
-                return 0;
-            default:
-                cout << "Invalid choice.\n";
+        case 1: militaryMenu(myKingdom); break;
+        case 2: economyMenu(myKingdom); break;
+        case 3: resourceMenu(myKingdom); break;
+        case 4: populationMenu(myKingdom); break;
+        case 5: leadershipMenu(myKingdom); break;
+		case 6: tradeMenu(myKingdom); break;
+        case 7:
+            cout << "\nProcessing Turn " << turn << "...\n";
+            myKingdom.update();
+            myKingdom.handleEvents();
+            randomEvent(myKingdom);
+            myKingdom.checkFinancialHealth();
+            ++turn;
+            break;
+        case 0:
+            cout << "\nExiting game. Thank you for playing.\n";
+            return 0;
+        default:
+            cout << "Invalid choice.\n";
         }
 
         system("pause");
-        system("cls"); 
+        system("cls");
     }
 
     return 0;
