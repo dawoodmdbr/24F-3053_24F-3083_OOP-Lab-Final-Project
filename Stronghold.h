@@ -248,6 +248,24 @@ public:
     void showFileChat() const;
 };
 
+class Diplomacy{
+private:
+    string kingdomNames[10];
+    bool alliances[10][10];
+    string allianceHistory[100];
+    int kingdomCount;
+    int historyCount;
+public:
+    Diplomacy();
+    void registerKingdom(const string& name);
+    void proposeAlliance(const string& kingdom1, const string& kingdom2);
+    void breakAlliance(const string& kingdom1, const string& kingdom2);
+    bool isAllied(const string& kingdom1, const string& kingdom2) const;
+    void showAlliances() const;
+    void showAllianceHistory() const;
+    void update(Kingdom &kingdom); 
+};
+
 class Kingdom
 {
 public:
