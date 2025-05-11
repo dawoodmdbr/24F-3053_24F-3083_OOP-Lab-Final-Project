@@ -37,7 +37,7 @@ enum EventType {
     DRAGON_SIGHTING,
     COMEDY_FESTIVAL,
     ASTRONOMICAL_EVENT,
-    EVENT_TYPE_COUNT  
+    EVENT_TYPE_COUNT
 };
 
 
@@ -59,7 +59,7 @@ protected:
 public:
     Corruption();
     Corruption(double initialCorruption);
-    void update(Kingdom &kingdom);
+    void update(Kingdom& kingdom);
     void increaseCorruption(double amount);
     void decreaseCorruption(double amount);
     double getCorruptionLevel() const;
@@ -77,7 +77,7 @@ public:
     Bank();
     Bank(double loan, double interest, double balance);
     void setLoanAmount(double a);
-    void update(Kingdom &kingdom);
+    void update(Kingdom& kingdom);
     void issueLoan(double a);
     void repayLoan(double a);
     void auditTreasury();
@@ -95,7 +95,7 @@ private:
 
 public:
     Economy();
-    void update(Kingdom &kingdom);
+    void update(Kingdom& kingdom);
     void adjustTaxRate(double a);
     void adjustInflation(double a);
     void tradeResources();
@@ -114,8 +114,8 @@ private:
 
 public:
     Event();
-    Event(EventType t, const string &desc, int imp);
-    void update(Kingdom &kingdom);
+    Event(EventType t, const string& desc, int imp);
+    void update(Kingdom& kingdom);
     void triggerEvent();
     EventType getType() const;
     string getDescription() const;
@@ -130,11 +130,11 @@ private:
 
 public:
     EventManager();
-    void update(Kingdom &kingdom);
+    void update(Kingdom& kingdom);
     void generateRandomEvent();
     Event getLatestEvent() const;
-    void applyEvent(Event &event);
-    void handleEvent(Kingdom &kingdom, Event &event);
+    void applyEvent(Event& event);
+    void handleEvent(Kingdom& kingdom, Event& event);
 };
 
 
@@ -147,11 +147,11 @@ private:
 
 public:
     Leadership();
-    Leadership(const string &name);
-    void update(Kingdom &kingdom);
-    void holdElection(Kingdom &kingdom);
-    void initiateCoup(Kingdom &kingdom);
-    void changeLeader(const string &newName, int style);
+    Leadership(const string& name);
+    void update(Kingdom& kingdom);
+    void holdElection(Kingdom& kingdom);
+    void initiateCoup(Kingdom& kingdom);
+    void changeLeader(const string& newName, int style);
     void affectPopularity(double a);
     string getLeaderName() const;
     int getLeadershipStyle() const;
@@ -170,7 +170,7 @@ private:
     int trainedSoldiers;
 public:
     Military();
-    void update(Kingdom &kingdom);
+    void update(Kingdom& kingdom);
     void recruitSoldiers();
     void paySoldiers();
     void trainSoldiers(int count);
@@ -190,7 +190,7 @@ private:
 
 public:
     Population();
-    void update(Kingdom &kingdom);
+    void update(Kingdom& kingdom);
     void adjustHappiness(SocialClass type, double delta);
     void addPopulation(SocialClass sClass, int count);
     bool removePopulation(SocialClass sClass, int count);
@@ -212,7 +212,7 @@ private:
 public:
     Resource();
     Resource(ResourceType type, double a, double max);
-    void update(Kingdom &kingdom);
+    void update(Kingdom& kingdom);
     void gather(double a);
     void consume(double a);
     void trade(double a);
@@ -229,14 +229,14 @@ private:
 
 public:
     ResourceManager();
-    void update(Kingdom &kingdom);
+    void update(Kingdom& kingdom);
     void gather(ResourceType type, int a);
     void consume(ResourceType type, int a);
     void trade(ResourceType fromType, ResourceType toType, int a);
     int get(ResourceType type) const;
 };
 
-class CommunicationSystem{
+class CommunicationSystem {
 private:
     string fileName;
     string inMemLog[100];
@@ -248,7 +248,7 @@ public:
     void showFileChat() const;
 };
 
-class Diplomacy{
+class Diplomacy {
 private:
     string kingdomNames[10];
     bool alliances[10][10];
@@ -266,6 +266,19 @@ public:
     void showAllianceHistory() const;
 };
 
+class TradeSystem {
+private:
+    double marketPrices[RESOURCE_TYPE_COUNT];
+    double priceFluctuation;
+
+public:
+    TradeSystem();
+    void updateMarket();
+    void displayMarket() const;
+    bool executeTrade(Kingdom& kingdom, ResourceType give, int giveAmount, ResourceType receive);
+    double getPrice(ResourceType resource) const;
+};
+
 class Kingdom
 {
 public:
@@ -280,23 +293,26 @@ public:
     EventManager eventManager;
     Corruption corruption;
     CommunicationSystem comms;
+    Kingdom() : name("Unnamed Kingdom"), id(0), population(), leadership(),
+        economy(), bank(), military(), resourceManager(),
+        eventManager(), corruption(), comms() {}
+    Kingdom(const string& name, int id, const string& leaderName);
 
-    Kingdom(const string &name, int id, const string &leaderName);
-    
     string getName() const;
     int getId() const;
     void update();
     void checkFinancialHealth();
     void handleEvents();
-    Population &getPopulation();
-    Leadership &getLeadership();
-    Economy &getEconomy();
-    Bank &getBank();
-    Military &getMilitary();
-    ResourceManager &getResourceManager();
-    EventManager &getEventManager();
-    Corruption &getCorruption();
-    CommunicationSystem &getComms();
+	TradeSystem& getTradeSystem();
+    Population& getPopulation();
+    Leadership& getLeadership();
+    Economy& getEconomy();
+    Bank& getBank();
+    Military& getMilitary();
+    ResourceManager& getResourceManager();
+    EventManager& getEventManager();
+    Corruption& getCorruption();
+    CommunicationSystem& getComms();
 };
 
-#endif
+#endif#pragma once
