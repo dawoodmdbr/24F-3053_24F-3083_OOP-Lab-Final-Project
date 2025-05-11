@@ -23,6 +23,18 @@ void Diplomacy::registerKingdom(Kingdom& kingdom) {
 void Diplomacy::proposeAlliance(Kingdom& kingdom1, Kingdom& kingdom2) {
     if (kingdomCount < 10) {
         alliances[kingdom1.getId()][kingdom2.getId()] = true;
+        allianceHistory[historyCount] = kingdom1.getName() + " proposed an alliance with " + kingdom2.getName();
+        historyCount++;
+    } else {
+        cout << "Maximum number of kingdoms reached." << endl;
+    }
+}
+
+void Diplomacy::acceptAlliance(Kingdom& kingdom1, Kingdom& kingdom2) {
+    if (kingdomCount < 10) {
+        alliances[kingdom1.getId()][kingdom2.getId()] = true;
+        allianceHistory[historyCount] = kingdom1.getName() + " accepted alliance with " + kingdom2.getName();
+        historyCount++;
     } else {
         cout << "Maximum number of kingdoms reached." << endl;
     }
@@ -31,6 +43,8 @@ void Diplomacy::proposeAlliance(Kingdom& kingdom1, Kingdom& kingdom2) {
 void Diplomacy::breakAlliance(Kingdom& kingdom1, Kingdom& kingdom2) {
     if (kingdomCount < 10) {
         alliances[kingdom1.getId()][kingdom2.getId()] = false;
+        allianceHistory[historyCount] = kingdom1.getName() + " broke alliance with " + kingdom2.getName();
+        historyCount++;
     } else {
         cout << "Maximum number of kingdoms reached." << endl;
     }
