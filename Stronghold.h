@@ -257,18 +257,20 @@ private:
     int historyCount;
 public:
     Diplomacy();
-    void registerKingdom(const string& name);
-    void proposeAlliance(const string& kingdom1, const string& kingdom2);
-    void breakAlliance(const string& kingdom1, const string& kingdom2);
-    bool isAllied(const string& kingdom1, const string& kingdom2) const;
+    void registerKingdom(Kingdom& kingdom);
+    void proposeAlliance(Kingdom& kingdom1, Kingdom& kingdom2);
+    void acceptAlliance(Kingdom& kingdom1, Kingdom& kingdom2);
+    void breakAlliance(Kingdom& kingdom1, Kingdom& kingdom2);
+    bool isAllied(Kingdom& kingdom1, Kingdom& kingdom2) const;
     void showAlliances() const;
     void showAllianceHistory() const;
-    void update(Kingdom &kingdom); 
 };
 
 class Kingdom
 {
 public:
+    string name;
+    int id;
     Population population;
     Leadership leadership;
     Economy economy;
@@ -279,7 +281,10 @@ public:
     Corruption corruption;
     CommunicationSystem comms;
 
-    Kingdom();
+    Kingdom(const string &name, int id, const string &leaderName);
+    
+    string getName() const;
+    int getId() const;
     void update();
     void checkFinancialHealth();
     void handleEvents();

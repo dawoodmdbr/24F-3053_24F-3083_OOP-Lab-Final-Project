@@ -3,9 +3,9 @@
 
 using namespace std;
 
-Kingdom::Kingdom() {
+Kingdom::Kingdom(const string& name, int id, const string& leaderName) : name(name), id(id) {
     population = Population();
-    leadership = Leadership("King Arthur");
+    leadership = Leadership(leaderName);
     economy = Economy();
     bank = Bank();
     military = Military();
@@ -14,6 +14,15 @@ Kingdom::Kingdom() {
     corruption = Corruption();
     comms = CommunicationSystem();
 }
+
+string Kingdom::getName() const {
+    return name;
+}
+
+int Kingdom::getId() const {
+    return id;
+}
+
 
 void Kingdom::update() {
     population.update(*this);
