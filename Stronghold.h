@@ -205,10 +205,11 @@ class Resource
 private:
     ResourceType type;
     double amount;
+    double maxAmount;
 
 public:
     Resource();
-    Resource(ResourceType type, double a);
+    Resource(ResourceType type, double a, double max);
     void update(Kingdom &kingdom);
     void gather(double a);
     void consume(double a);
@@ -216,6 +217,7 @@ public:
     ResourceType getType() const;
     double getAmount() const;
     void setAmount(double amt);
+    double getMaxAmount() const;
 };
 
 class ResourceManager
