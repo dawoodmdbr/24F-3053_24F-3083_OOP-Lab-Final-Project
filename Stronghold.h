@@ -2,6 +2,8 @@
 #define STRONGHOLD_H
 
 #include <string>
+#include <iostream>
+#include<fstream>
 #include <random>
 
 using namespace std;
@@ -234,7 +236,17 @@ public:
     int get(ResourceType type) const;
 };
 
-
+class CommunicationSystem{
+private:
+    string fileName;
+    string inMemLog[100];
+    int logCount;
+public:
+    CommunicationSystem();
+    void sendMessage(const string& sender, const string& receiver, const string& message);
+    void showInMemChat() const;
+    void showFileChat() const;
+};
 
 class Kingdom
 {
@@ -247,6 +259,7 @@ public:
     ResourceManager resourceManager;
     EventManager eventManager;
     Corruption corruption;
+    CommunicationSystem comms;
 
     Kingdom();
     void update();
@@ -260,6 +273,7 @@ public:
     ResourceManager &getResourceManager();
     EventManager &getEventManager();
     Corruption &getCorruption();
+    CommunicationSystem &getComms();
 };
 
 #endif

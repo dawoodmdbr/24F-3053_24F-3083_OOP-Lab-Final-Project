@@ -12,6 +12,7 @@ Kingdom::Kingdom() {
     resourceManager = ResourceManager();
     eventManager = EventManager();
     corruption = Corruption();
+    comms = CommunicationSystem();
 }
 
 void Kingdom::update() {
@@ -74,4 +75,7 @@ EventManager& Kingdom::getEventManager() {
 
 Corruption& Kingdom::getCorruption() {
     return corruption;
+}
+CommunicationSystem& Kingdom::getComms() {
+    return comms;
 }
