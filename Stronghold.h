@@ -279,6 +279,7 @@ public:
     double getPrice(ResourceType resource) const;
 };
 
+
 class Kingdom
 {
 public:
@@ -315,5 +316,24 @@ public:
     Corruption& getCorruption();
     CommunicationSystem& getComms();
 };
+class MultiplayerSystem {
+private:
+    Kingdom player1;
+    Kingdom player2;
+    bool isPlayer1Turn;
+    int currentTurn;
+    string player1Name;
+    string player2Name;
 
-#endif#pragma once
+public:
+    MultiplayerSystem();
+    void startGame();
+    void switchTurn();
+    void processCurrentTurn();
+    Kingdom& getCurrentPlayer();
+    Kingdom& getOpponentPlayer();
+	string getCurrentPlayerName() const;
+    bool isCurrentPlayer1() const;
+    int getCurrentTurn() const;
+};
+#endif
