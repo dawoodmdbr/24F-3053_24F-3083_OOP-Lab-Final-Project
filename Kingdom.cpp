@@ -3,9 +3,24 @@
 
 using namespace std;
 
-Kingdom::Kingdom(const string& name, int id, const string& leaderName) : name(name), id(id) {
+Kingdom::Kingdom()
+{
+    string kingdomName, leader;
+    int id;
+
+    cout << "Enter Kingdom name: ";
+    cin >> kingdomName;
+    cout << "Enter id: ";
+    cin >> id;
+    cout << "Enter Leader Name: ";
+    cin >> leader;
+
+    name = kingdomName;
+    this->id = id;
+
+
     population = Population();
-    leadership = Leadership(leaderName);
+    leadership = Leadership(leader);
     economy = Economy();
     bank = Bank();
     military = Military();
@@ -13,20 +28,22 @@ Kingdom::Kingdom(const string& name, int id, const string& leaderName) : name(na
     eventManager = EventManager();
     corruption = Corruption();
     comms = CommunicationSystem("chatHistory.txt");
-	tradeSystem = TradeSystem();
+    tradeSystem = TradeSystem();
     diplomacy = Diplomacy();
 }
 
-string Kingdom::getName() const {
+string Kingdom::getName() const
+{
     return name;
 }
 
-int Kingdom::getId() const {
+int Kingdom::getId() const
+{
     return id;
 }
 
-
-void Kingdom::update() {
+void Kingdom::update()
+{
     population.update(*this);
     leadership.update(*this);
     bank.update(*this);
@@ -36,62 +53,75 @@ void Kingdom::update() {
     corruption.update(*this);
 }
 
-void Kingdom::checkFinancialHealth() {
+void Kingdom::checkFinancialHealth()
+{
 
-    if (economy.getGoldReserve() < 1000.0) {
+    if (economy.getGoldReserve() < 1000.0)
+    {
         cout << "Warning: Low gold reserve!" << endl;
     }
-    if (economy.getTaxRate() > 0.5) {
+    if (economy.getTaxRate() > 0.5)
+    {
         cout << "Warning: High tax rate!" << endl;
     }
 }
 
-void Kingdom::handleEvents() {
+void Kingdom::handleEvents()
+{
     eventManager.generateRandomEvent();
     Event latestEvent = eventManager.getLatestEvent();
     eventManager.applyEvent(latestEvent);
     eventManager.handleEvent(*this, latestEvent);
 }
 
-
-
-TradeSystem& Kingdom::getTradeSystem() {
-	return tradeSystem;
+TradeSystem &Kingdom::getTradeSystem()
+{
+    return tradeSystem;
 }
-Population& Kingdom::getPopulation() {
+Population &Kingdom::getPopulation()
+{
     return population;
 }
 
-Leadership& Kingdom::getLeadership() {
+Leadership &Kingdom::getLeadership()
+{
     return leadership;
 }
 
-Bank& Kingdom::getBank() {
+Bank &Kingdom::getBank()
+{
     return bank;
 }
 
-Military& Kingdom::getMilitary() {
+Military &Kingdom::getMilitary()
+{
     return military;
 }
 
-ResourceManager& Kingdom::getResourceManager() {
+ResourceManager &Kingdom::getResourceManager()
+{
     return resourceManager;
 }
 
-Economy& Kingdom::getEconomy() {
+Economy &Kingdom::getEconomy()
+{
     return economy;
 }
 
-EventManager& Kingdom::getEventManager() {
+EventManager &Kingdom::getEventManager()
+{
     return eventManager;
 }
 
-Corruption& Kingdom::getCorruption() {
+Corruption &Kingdom::getCorruption()
+{
     return corruption;
 }
-CommunicationSystem& Kingdom::getComms() {
+CommunicationSystem &Kingdom::getComms()
+{
     return comms;
 }
-Diplomacy& Kingdom::getDiplomacy(){
+Diplomacy &Kingdom::getDiplomacy()
+{
     return diplomacy;
 }

@@ -316,9 +316,9 @@ public:
     EventManager eventManager;
     Corruption corruption;
     CommunicationSystem comms;
+    Diplomacy diplomacy;
     
     Kingdom();
-    Kingdom(const string& name, int id, const string& leaderName);
 
     string getName() const;
     int getId() const;
@@ -358,4 +358,10 @@ public:
     bool isCurrentPlayer1() const;
     int getCurrentTurn() const;
 };
+class Logger {
+public:
+    void logGameStart(bool isMultiplayer, const string& player1, const string& player2 = "");
+
+};
+
 #endif

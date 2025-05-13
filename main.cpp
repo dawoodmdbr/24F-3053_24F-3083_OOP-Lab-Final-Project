@@ -543,7 +543,6 @@ void displayMainMenuMulti() {
 
 int main() {
     srand(time(0));
-    Kingdom myKingdom;
     int mainChoice;
     int turn = 1;
 
@@ -556,6 +555,7 @@ int main() {
     cin >> gameMode;
 
     if (gameMode == 1) {
+        
         Kingdom singlePlayerKingdom;
         while (true) {
             cout << endl << " Day " << turn << "" << endl;
@@ -563,18 +563,18 @@ int main() {
             cin >> mainChoice;
 
             switch (mainChoice) {
-            case 1: militaryMenu(myKingdom); break;
-            case 2: economyMenu(myKingdom); break;
-            case 3: resourceMenu(myKingdom); break;
-            case 4: populationMenu(myKingdom); break;
-            case 5: leadershipMenu(myKingdom); break;
-            case 6: tradeMenu(myKingdom); break;
+            case 1: militaryMenu(singlePlayerKingdom); break;
+            case 2: economyMenu(singlePlayerKingdom); break;
+            case 3: resourceMenu(singlePlayerKingdom); break;
+            case 4: populationMenu(singlePlayerKingdom); break;
+            case 5: leadershipMenu(singlePlayerKingdom); break;
+            case 6: tradeMenu(singlePlayerKingdom); break;
             case 7:
                 cout << endl << " Processing Turn " << turn << "..." << endl;
-                myKingdom.update();
-                myKingdom.handleEvents();
-                randomEvent(myKingdom);
-                myKingdom.checkFinancialHealth();
+                singlePlayerKingdom.update();
+                singlePlayerKingdom.handleEvents();
+                randomEvent(singlePlayerKingdom);
+                singlePlayerKingdom.checkFinancialHealth();
                 ++turn;
                 break;
             case 0:
