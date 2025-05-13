@@ -1,7 +1,11 @@
-#include"Stronghold.h"
-#include<iostream>
+#include "Stronghold.h"
+#include <iostream>
+#include <string>
 
-Diplomacy::Diplomacy(){
+using namespace std;
+
+
+Diplomacy::Diplomacy() {
     kingdomCount = 0;
     historyCount = 0;
     for (int i = 0; i < 10; i++) {
@@ -11,62 +15,97 @@ Diplomacy::Diplomacy(){
     }
 }
 
+
 void Diplomacy::registerKingdom(Kingdom& kingdom) {
     if (kingdomCount < 10) {
-        kingdomNames[kingdomCount] = kingdom.getName();
-        kingdomCount++;
+        kingdomNames[kingdomCount++] = kingdom.getName();
+        cout << "Kingdom " << kingdom.getName() << " registered successfully.\n";
     } else {
-        cout << "Maximum number of kingdoms reached." << endl;
+        cout << "Cannot register more kingdoms, limit reached.\n";
     }
 }
+
 
 void Diplomacy::proposeAlliance(Kingdom& kingdom1, Kingdom& kingdom2) {
-    if (kingdomCount < 10) {
-        alliances[kingdom1.getId()][kingdom2.getId()] = true;
-        allianceHistory[historyCount] = kingdom1.getName() + " proposed an alliance with " + kingdom2.getName();
-        historyCount++;
+    int index1 = -1, index2 = -1;
+    for (int i = 0; i < kingdomCount; i++) {
+        if (kingdomNames[i] == kingdom1.getName()) index1 = i;
+        if (kingdomNames[i] == kingdom2.getName()) index2 = i;
+    }
+
+    if (index1 != -1 && index2 != -1) {
+        cout << "Alliance proposed between " << kingdom1.getName() << " and " << kingdom2.getName() << ".\n";
     } else {
-        cout << "Maximum number of kingdoms reached." << endl;
+        cout << "One or both kingdoms not found.\n";
     }
 }
+
 
 void Diplomacy::acceptAlliance(Kingdom& kingdom1, Kingdom& kingdom2) {
-    if (kingdomCount < 10) {
-        alliances[kingdom1.getId()][kingdom2.getId()] = true;
-        allianceHistory[historyCount] = kingdom1.getName() + " accepted alliance with " + kingdom2.getName();
-        historyCount++;
+    int index1 = -1, index2 = -1;
+    for (int i = 0; i < kingdomCount; i++) {
+        if (kingdomNames[i] == kingdom1.getName()) index1 = i;
+        if (kingdomNames[i] == kingdom2.getName()) index2 = i;
+    }
+
+    if (index1 != -1 && index2 != -1) {
+        alliances[index1][index2] = true;
+        alliances[index2][index1] = true;
+        allianceHistory[historyCount++] = kingdom1.getName() + " and " + kingdom2.getName() + " formed an alliance.";
+        cout << "Alliance accepted between " << kingdom1.getName() << " and " << kingdom2.getName() << ".\n";
     } else {
-        cout << "Maximum number of kingdoms reached." << endl;
+        cout << "One or both kingdoms not found.\n";
     }
 }
+
 
 void Diplomacy::breakAlliance(Kingdom& kingdom1, Kingdom& kingdom2) {
-    if (kingdomCount < 10) {
-        alliances[kingdom1.getId()][kingdom2.getId()] = false;
-        allianceHistory[historyCount] = kingdom1.getName() + " broke alliance with " + kingdom2.getName();
-        historyCount++;
+    int index1 = -1, index2 = -1;
+    for (int i = 0; i < kingdomCount; i++) {
+        if (kingdomNames[i] == kingdom1.getName()) index1 = i;
+        if (kingdomNames[i] == kingdom2.getName()) index2 = i;
+    }
+
+    if (index1 != -1 && index2 != -1 && alliances[index1][index2]) {
+        alliances[index1][index2] = false;
+        alliances[index2][index1] = false;
+        allianceHistory[historyCount++] = kingdom1.getName() + " and " + kingdom2.getName() + " broke their alliance.";
+        cout << "Alliance broken between " << kingdom1.getName() << " and " << kingdom2.getName() << ".\n";
     } else {
-        cout << "Maximum number of kingdoms reached." << endl;
+        cout << "No alliance exists between " << kingdom1.getName() << " and " << kingdom2.getName() << ".\n";
     }
 }
 
+
 bool Diplomacy::isAllied(Kingdom& kingdom1, Kingdom& kingdom2) const {
-    return alliances[kingdom1.getId()][kingdom2.getId()];
+    int index1 = -1, index2 = -1;
+    for (int i = 0; i < kingdomCount; i++) {
+        if (kingdomNames[i] == kingdom1.getName()) index1 = i;
+        if (kingdomNames[i] == kingdom2.getName()) index2 = i;
+    }
+
+    if (index1 != -1 && index2 != -1) {
+        return alliances[index1][index2];
+    }
+
+    return false;
 }
 
+
 void Diplomacy::showAlliances() const {
-    cout << "Alliances:" << endl;
+    cout << "\n=== Current Alliances ===\n";
     for (int i = 0; i < kingdomCount; i++) {
-        for (int j = 0; j < kingdomCount; j++) {
+        for (int j = i + 1; j < kingdomCount; j++) {
             if (alliances[i][j]) {
-                cout << kingdomNames[i] << " is allied with " << kingdomNames[j] << endl;
+                cout << kingdomNames[i] << " and " << kingdomNames[j] << " are allied.\n";
             }
         }
     }
 }
 
+
 void Diplomacy::showAllianceHistory() const {
-    cout << "Alliance History:" << endl;
+    cout << "\n=== Alliance History ===\n";
     for (int i = 0; i < historyCount; i++) {
         cout << allianceHistory[i] << endl;
     }

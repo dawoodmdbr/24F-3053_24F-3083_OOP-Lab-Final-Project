@@ -244,6 +244,7 @@ private:
     int logCount;
 public:
     CommunicationSystem();
+    CommunicationSystem(const string& file);
     void sendMessage(const string& sender, const string& receiver, const string& message);
     void showInMemChat() const;
     void showFileChat() const;
@@ -315,7 +316,7 @@ public:
     EventManager eventManager;
     Corruption corruption;
     CommunicationSystem comms;
-    
+    Diplomacy diplomacy;
     Kingdom();
     Kingdom(const string& name, int id, const string& leaderName);
 
@@ -334,6 +335,7 @@ public:
     EventManager& getEventManager();
     Corruption& getCorruption();
     CommunicationSystem& getComms();
+    Diplomacy& getDiplomacy();
 };
 
 class MultiplayerSystem {
@@ -356,4 +358,5 @@ public:
     bool isCurrentPlayer1() const;
     int getCurrentTurn() const;
 };
+
 #endif

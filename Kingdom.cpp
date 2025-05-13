@@ -12,8 +12,9 @@ Kingdom::Kingdom(const string& name, int id, const string& leaderName) : name(na
     resourceManager = ResourceManager();
     eventManager = EventManager();
     corruption = Corruption();
-    comms = CommunicationSystem();
+    comms = CommunicationSystem("chatHistory.txt");
 	tradeSystem = TradeSystem();
+    diplomacy = Diplomacy();
 }
 
 string Kingdom::getName() const {
@@ -90,4 +91,7 @@ Corruption& Kingdom::getCorruption() {
 }
 CommunicationSystem& Kingdom::getComms() {
     return comms;
+}
+Diplomacy& Kingdom::getDiplomacy(){
+    return diplomacy;
 }
