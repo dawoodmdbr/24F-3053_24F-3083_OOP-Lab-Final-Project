@@ -175,6 +175,7 @@ public:
     void paySoldiers();
     void trainSoldiers(int count);
     void manageMorale();
+    void setSoldierCount(int count);
     int getSoldierCount() const;
     double getMorale() const;
 };
@@ -279,6 +280,25 @@ public:
     double getPrice(ResourceType resource) const;
 };
 
+class War {
+private:
+    Kingdom* attacker;
+    Kingdom* defender;
+    bool isActive;
+    int duration;
+
+public:
+    War();
+    War(Kingdom* atk, Kingdom* def);
+    void start();
+    void simulateRound();
+    void end();
+    bool getStatus() const;
+    string getWinner() const;
+    void showStatus() const;
+};
+
+
 
 class Kingdom
 {
@@ -295,9 +315,8 @@ public:
     EventManager eventManager;
     Corruption corruption;
     CommunicationSystem comms;
-    Kingdom() : name("Unnamed Kingdom"), id(0), population(), leadership(),
-        economy(), bank(), military(), resourceManager(),
-        eventManager(), corruption(), comms() {}
+    
+    Kingdom();
     Kingdom(const string& name, int id, const string& leaderName);
 
     string getName() const;
@@ -316,6 +335,7 @@ public:
     Corruption& getCorruption();
     CommunicationSystem& getComms();
 };
+
 class MultiplayerSystem {
 private:
     Kingdom player1;

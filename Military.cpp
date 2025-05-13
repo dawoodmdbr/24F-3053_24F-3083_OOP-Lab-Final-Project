@@ -64,6 +64,10 @@ int  Military::getSoldierCount() const {
     return soldierCount;
 }
 
+void Military::setSoldierCount(int count) {
+    soldierCount = count;
+}
+
 double Military::getMorale() const {
     return morale;
 }
