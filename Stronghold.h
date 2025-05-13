@@ -268,38 +268,38 @@ public:
 };
 
 enum AllianceStatus {
-    NONE,         
-    ALLIED,       
-    ENEMY,        
-    BETRAYED,     
+    NONE,
+    ALLIED,
+    ENEMY,
+    BETRAYED,
     ALLIANCE_STATUS_COUNT
 };
 
 class Diplomacy {
 public:
-    Diplomacy();  
+    Diplomacy();
 
-    
-    void formAlliance(Kingdom& kingdom1, Kingdom& kingdom2);  
-    void breakAlliance(Kingdom& kingdom1, Kingdom& kingdom2); 
-    void declareWar(Kingdom& kingdom1, Kingdom& kingdom2);    
 
-    
-    void applyWarConsequences(Kingdom& kingdom1, Kingdom& kingdom2); 
-    void applyBetrayalConsequences(Kingdom& kingdom1, Kingdom& kingdom2); 
+    void formAlliance(Kingdom& kingdom1, Kingdom& kingdom2);
+    void breakAlliance(Kingdom& kingdom1, Kingdom& kingdom2);
+    void declareWar(Kingdom& kingdom1, Kingdom& kingdom2);
 
-    
-    bool isAllied(Kingdom& kingdom1, Kingdom& kingdom2) const; 
-    bool isAtWar(Kingdom& kingdom1, Kingdom& kingdom2) const;  
-    bool hasBetrayed(Kingdom& kingdom1, Kingdom& kingdom2) const; 
+
+    void applyWarConsequences(Kingdom& kingdom1, Kingdom& kingdom2);
+    void applyBetrayalConsequences(Kingdom& kingdom1, Kingdom& kingdom2);
+
+
+    bool isAllied(Kingdom& kingdom1, Kingdom& kingdom2) const;
+    bool isAtWar(Kingdom& kingdom1, Kingdom& kingdom2) const;
+    bool hasBetrayed(Kingdom& kingdom1, Kingdom& kingdom2) const;
 
 private:
-    
-    void logAllianceFormed(Kingdom& kingdom1, Kingdom& kingdom2); 
-    void logAllianceBroken(Kingdom& kingdom1, Kingdom& kingdom2); 
-    void logWarDeclared(Kingdom& kingdom1, Kingdom& kingdom2);    
 
-    
+    void logAllianceFormed(Kingdom& kingdom1, Kingdom& kingdom2);
+    void logAllianceBroken(Kingdom& kingdom1, Kingdom& kingdom2);
+    void logWarDeclared(Kingdom& kingdom1, Kingdom& kingdom2);
+
+
 };
 
 
@@ -323,7 +323,7 @@ public:
     CommunicationSystem comms;
     Diplomacy diplomacy;
     AllianceStatus allianceStatus[10];
-    
+    string lastReceivedMessage;
     Kingdom();
 
     string getName() const;
@@ -358,6 +358,7 @@ private:
 public:
     MultiplayerSystem();
     void startGame();
+	void communicationMenu();
     void switchTurn();
     void processCurrentTurn();
     Kingdom& getCurrentPlayer();
