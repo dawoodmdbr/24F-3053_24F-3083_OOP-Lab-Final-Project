@@ -304,7 +304,7 @@ public:
 class Kingdom
 {
 public:
-	TradeSystem tradeSystem;
+    TradeSystem tradeSystem;
     string name;
     int id;
     Population population;
@@ -316,7 +316,7 @@ public:
     EventManager eventManager;
     Corruption corruption;
     CommunicationSystem comms;
-    Diplomacy diplomacy;
+    
     Kingdom();
     Kingdom(const string& name, int id, const string& leaderName);
 
@@ -325,7 +325,7 @@ public:
     void update();
     void checkFinancialHealth();
     void handleEvents();
-	TradeSystem& getTradeSystem();
+    TradeSystem& getTradeSystem();
     Population& getPopulation();
     Leadership& getLeadership();
     Economy& getEconomy();
@@ -354,9 +354,8 @@ public:
     void processCurrentTurn();
     Kingdom& getCurrentPlayer();
     Kingdom& getOpponentPlayer();
-	string getCurrentPlayerName() const;
+    string getCurrentPlayerName() const;
     bool isCurrentPlayer1() const;
     int getCurrentTurn() const;
 };
-
 #endif
