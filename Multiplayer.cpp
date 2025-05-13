@@ -52,18 +52,6 @@ void MultiplayerSystem::communicationMenu() {
         else {
             cout << "\n--- Inbox --- \n";
             cout << getCurrentPlayer().lastReceivedMessage << "\n";
-
-            cout << "\nReply? (Y/N): ";
-            char reply;
-            cin >> reply;
-            cin.ignore();
-
-            if (toupper(reply) == 'Y') {
-                cout << "Enter reply: ";
-                getline(cin, message);
-                getOpponentPlayer().lastReceivedMessage = message;
-                cout << "Reply sent!\n";
-            }
         }
         break;
 
