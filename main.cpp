@@ -297,11 +297,11 @@ void tradeMenu(Kingdom& kingdom) {
         }
 
         switch (choice) {
-        case 1: 
+        case 1:
             trade.displayMarket();
             break;
 
-        case 2: { 
+        case 2: {
             int give, receive, amount;
 
             cout << endl << " Select resource to give:" << endl;
@@ -311,7 +311,7 @@ void tradeMenu(Kingdom& kingdom) {
             cout << "4. Iron" << endl;
             cout << "Choice: ";
             cin >> give;
-            give--; 
+            give--;
 
             cout << "Amount to trade: ";
             cin >> amount;
@@ -323,7 +323,7 @@ void tradeMenu(Kingdom& kingdom) {
             cout << "4. Iron" << endl;
             cout << "Choice: ";
             cin >> receive;
-            receive--; 
+            receive--;
 
             if (give >= 0 && give <= 3 && receive >= 0 && receive <= 3) {
                 trade.executeTrade(kingdom,
@@ -337,7 +337,7 @@ void tradeMenu(Kingdom& kingdom) {
             break;
         }
 
-        case 3: { 
+        case 3: {
             int give, amount;
 
             cout << endl << " Select resource to sell:" << endl;
@@ -418,7 +418,8 @@ void diplomacyMenu(Kingdom& currentPlayer, Kingdom& opponent, Diplomacy& diploma
     case 1: {
         if (!diplomacy.isAtWar(currentPlayer, opponent)) {
             diplomacy.declareWar(currentPlayer, opponent);
-        } else {
+        }
+        else {
             cout << "War already declared with " << opponent.getName() << ".\n";
         }
         break;
@@ -426,7 +427,8 @@ void diplomacyMenu(Kingdom& currentPlayer, Kingdom& opponent, Diplomacy& diploma
     case 2: {
         if (!diplomacy.isAllied(currentPlayer, opponent)) {
             diplomacy.formAlliance(currentPlayer, opponent);
-        } else {
+        }
+        else {
             cout << "Already allied with " << opponent.getName() << ".\n";
         }
         break;
@@ -434,7 +436,8 @@ void diplomacyMenu(Kingdom& currentPlayer, Kingdom& opponent, Diplomacy& diploma
     case 3: {
         if (diplomacy.isAllied(currentPlayer, opponent)) {
             diplomacy.breakAlliance(currentPlayer, opponent);
-        } else {
+        }
+        else {
             cout << "No alliance to break with " << opponent.getName() << ".\n";
         }
         break;
@@ -470,7 +473,8 @@ void displayMainMenuMulti() {
     cout << "5. Leadership" << endl;
     cout << "6. Trade Center" << endl;
     cout << "7. Diplomacy" << endl;
-    cout << "8. Next Turn" << endl;
+	cout << "8. Communication" << endl;
+    cout << "9. Next Turn" << endl;
     cout << "0. Exit Game" << endl;
     cout << "Select a category: ";
 }
@@ -490,7 +494,7 @@ int main() {
     cin >> gameMode;
 
     if (gameMode == 1) {
-        
+
         Kingdom singlePlayerKingdom;
         while (true) {
             cout << endl << " Day " << turn << "" << endl;
@@ -530,7 +534,7 @@ int main() {
 
         while (true) {
             cout << endl << " Day " << multiplayer.getCurrentTurn() << "" << endl;
-			cout <<multiplayer.getCurrentPlayerName() << "'s Turn" << endl;
+            cout << multiplayer.getCurrentPlayerName() << "'s Turn" << endl;
             displayMainMenuMulti();
             cin >> mainChoice;
 
@@ -543,7 +547,8 @@ int main() {
             case 5: leadershipMenu(multiplayer.getCurrentPlayer()); break;
             case 6: tradeMenu(multiplayer.getCurrentPlayer()); break;
             case 7:diplomacyMenu(multiplayer.getCurrentPlayer(), multiplayer.getOpponentPlayer(), diplomacy); break;
-            case 8:
+			case 8:multiplayer.communicationMenu(); break;
+            case 9:
                 cout << endl << " Processing Turn " << multiplayer.getCurrentTurn() << "..." << endl;
                 multiplayer.processCurrentTurn();
                 randomEvent(multiplayer.getCurrentPlayer());
