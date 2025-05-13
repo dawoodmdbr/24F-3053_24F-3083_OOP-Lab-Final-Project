@@ -1,8 +1,8 @@
 #include "Stronghold.h"
 using namespace std;
-ResourceManager::ResourceManager(){
+ResourceManager::ResourceManager() {
     for (int i = 0; i < RESOURCE_TYPE_COUNT; i++) {
-        resources[i] = Resource(static_cast<ResourceType>(i), 100.0);
+        resources[i] = Resource(static_cast<ResourceType>(i), 100.0,1000);
     }
 }
 void ResourceManager::gather(ResourceType type, int a) {
@@ -32,5 +32,3 @@ void ResourceManager::update(Kingdom& kingdom) {
         resources[i].update(kingdom);
     }
 }
-
-
