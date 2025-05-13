@@ -377,114 +377,6 @@ void tradeMenu(Kingdom& kingdom) {
     }
 }
 
-void diplomacyMenu(Kingdom& kingdom1, Kingdom kingdom2) {
-    Diplomacy& diplomacy = kingdom1.getDiplomacy();
-
-    int choice;
-    while (true) {
-        cout << endl << " ===DIPLOMACY MENU===" << endl;
-        cout << "1. Propose Alliance" << endl;
-        cout << "2. Accept Alliance" << endl;
-        cout << "3. Break Alliance" << endl;
-        cout << "5. View Alliance History" << endl;
-        cout << "0. Back to Main Menu" << endl;
-        cout << "Choice: ";
-        cin >> choice;
-
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore();
-            cout << "Invalid input" << endl;
-            continue;
-        }
-
-        switch (choice) {
-        case 1: 
-            diplomacy.proposeAlliance(kingdom1, kingdom2);
-            break;
-
-        case 2: 
-            diplomacy.acceptAlliance(kingdom1, kingdom2);
-            break;
-
-        case 3: 
-            diplomacy.breakAlliance(kingdom1, kingdom2);
-            break;
-
-        case 5:
-            diplomacy.showAllianceHistory();
-            break;
-
-        case 0:
-            return;
-
-        default:
-            cout << "Invalid choice." << endl;
-        }
-    }
-}
-
-void warMenu(War& war, Kingdom attacker, Kingdom defender) {
-    int choice;
-    while (true) {
-        cout << "\n=== War Menu ===\n";
-        cout << "1. Declare War\n";
-        cout << "2. Simulate Round\n";
-        cout << "3. Show War Status\n";
-        cout << "4. Show Winner\n";
-        cout << "5. End War\n";
-        cout << "0. Return to Main Menu\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice) {
-            case 1:
-                if (war.getStatus()) {
-                    cout << "A war is already in progress.\n";
-                } else {
-                    war.start();
-                }
-                break;
-
-            case 2:
-                if (war.getStatus()) {
-                    war.simulateRound();
-                } else {
-                    cout << "No active war. Declare war first.\n";
-                }
-                break;
-
-            case 3:
-                if (war.getStatus()) {
-                    war.showStatus();
-                } else {
-                    cout << "No active war.\n";
-                }
-                break;
-
-            case 4:
-                cout << "Current War Status: ";
-                cout << war.getWinner() << endl;
-                break;
-
-            case 5:
-                if (war.getStatus()) {
-                    war.end();
-                } else {
-                    cout << "No war is currently active.\n";
-                }
-                break;
-
-            case 0:
-                return;
-
-            default:
-                cout << "Invalid choice. Try again.\n";
-        }
-    }
-}
-
-
 void randomEvent(Kingdom& kingdom) {
     int eventRoll = rand() % 5;
 
@@ -512,6 +404,50 @@ void randomEvent(Kingdom& kingdom) {
     }
 }
 
+void diplomacyMenu(Kingdom& currentPlayer, Kingdom& opponent, Diplomacy& diplomacy) {
+    int choice;
+    cout << endl << " === DIPLOMACY MENU ===" << endl;
+    cout << "1. Declare War on Kingdom" << endl;
+    cout << "2. Offer Alliance to Kingdom" << endl;
+    cout << "3. Break Alliance with Kingdom" << endl;
+    cout << "0. Back to Main Menu" << endl;
+    cout << "Choice: ";
+    cin >> choice;
+
+    switch (choice) {
+    case 1: {
+        if (!diplomacy.isAtWar(currentPlayer, opponent)) {
+            diplomacy.declareWar(currentPlayer, opponent);
+        } else {
+            cout << "War already declared with " << opponent.getName() << ".\n";
+        }
+        break;
+    }
+    case 2: {
+        if (!diplomacy.isAllied(currentPlayer, opponent)) {
+            diplomacy.formAlliance(currentPlayer, opponent);
+        } else {
+            cout << "Already allied with " << opponent.getName() << ".\n";
+        }
+        break;
+    }
+    case 3: {
+        if (diplomacy.isAllied(currentPlayer, opponent)) {
+            diplomacy.breakAlliance(currentPlayer, opponent);
+        } else {
+            cout << "No alliance to break with " << opponent.getName() << ".\n";
+        }
+        break;
+    }
+    case 0:
+        cout << "Returning to Main Menu...\n";
+        break;
+    default:
+        cout << "Invalid choice! Please try again.\n";
+    }
+}
+
+
 void displayMainMenuSingle() {
     cout << endl << " Stronghold Management" << endl;
     cout << "1. Military" << endl;
@@ -534,8 +470,7 @@ void displayMainMenuMulti() {
     cout << "5. Leadership" << endl;
     cout << "6. Trade Center" << endl;
     cout << "7. Diplomacy" << endl;
-    cout << "8. War" << endl; 
-    cout << "9. Next Turn" << endl;
+    cout << "8. Next Turn" << endl;
     cout << "0. Exit Game" << endl;
     cout << "Select a category: ";
 }
@@ -591,13 +526,14 @@ int main() {
     else if (gameMode == 2) {
         MultiplayerSystem multiplayer;
         multiplayer.startGame();
-        War war;
+        Diplomacy diplomacy;
 
         while (true) {
             cout << endl << " Day " << multiplayer.getCurrentTurn() << "" << endl;
 			cout <<multiplayer.getCurrentPlayerName() << "'s Turn" << endl;
             displayMainMenuMulti();
             cin >> mainChoice;
+
 
             switch (mainChoice) {
             case 1: militaryMenu(multiplayer.getCurrentPlayer()); break;
@@ -606,9 +542,8 @@ int main() {
             case 4: populationMenu(multiplayer.getCurrentPlayer()); break;
             case 5: leadershipMenu(multiplayer.getCurrentPlayer()); break;
             case 6: tradeMenu(multiplayer.getCurrentPlayer()); break;
-            case 7: diplomacyMenu(multiplayer.getCurrentPlayer(), multiplayer.getOpponentPlayer()); break;
-            case 8: warMenu(war, multiplayer.getCurrentPlayer(), multiplayer.getOpponentPlayer()); break;
-            case 9:
+            case 7:diplomacyMenu(multiplayer.getCurrentPlayer(), multiplayer.getOpponentPlayer(), diplomacy); break;
+            case 8:
                 cout << endl << " Processing Turn " << multiplayer.getCurrentTurn() << "..." << endl;
                 multiplayer.processCurrentTurn();
                 randomEvent(multiplayer.getCurrentPlayer());

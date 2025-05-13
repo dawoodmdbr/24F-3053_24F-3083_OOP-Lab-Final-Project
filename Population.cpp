@@ -66,7 +66,13 @@ double Population::getOverallHappiness() const {
     }
     return totalHappiness / SOCIAL_CLASS_COUNT;
 }
-
+void Population::affectHappiness(double amount) {
+    
+    for (int i = 0; i < SOCIAL_CLASS_COUNT; i++) {
+        happiness[i] += amount;
+    }
+    cout << "Happiness has been adjusted by " << amount << " for the population.\n";
+}
 void Population::affectHealth(double amount) {
     health += amount;
 }

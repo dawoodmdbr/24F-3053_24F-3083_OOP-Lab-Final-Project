@@ -7,11 +7,7 @@ Military::Military(){
     payRequired = 0.0;
     corruptionLevel = 0.0;
 }
-void Military::recruitSoldiers() {  
-    int randomRecruits = rand() % 21 + 10; 
-    soldierCount += randomRecruits;
-    cout<< randomRecruits << " soldiers were recruited in this attempt.\n";
-}
+
 void Military::trainSoldiers(int count) {
     if (count <= 0) {
         cout << "Cannot train zero or negative soldiers!\n";
@@ -59,7 +55,19 @@ void Military::manageMorale() {
         if (morale < 0.0) morale = 0.0;
     }
 }
+void Military::recruitSoldiers() {
+    int additionalSoldiers = 100;  
+    soldierCount += additionalSoldiers;
+    cout << "Recruiting " << additionalSoldiers << " additional soldiers.\n";
+}
 
+
+void Military::declareWar(Kingdom& enemyKingdom) {
+    
+    int warPreparation = 50;  
+    soldierCount += warPreparation;
+    cout << "War declared! " << enemyKingdom.getName() << " is now a target.\n";
+}
 int  Military::getSoldierCount() const {
     return soldierCount;
 }

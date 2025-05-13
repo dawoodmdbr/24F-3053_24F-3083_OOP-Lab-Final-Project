@@ -52,6 +52,22 @@ void Kingdom::checkFinancialHealth()
     }
 }
 
+void Kingdom::updateAllianceStatus(int otherKingdomId, AllianceStatus status, const string& message) {
+    
+    if (otherKingdomId >= 0 && otherKingdomId < 100) {  
+        allianceStatus[otherKingdomId] = status;
+    }
+    cout << message << endl;
+}
+
+
+AllianceStatus Kingdom::getAllianceStatus(int otherKingdomId) const {
+    if (otherKingdomId >= 0 && otherKingdomId < 100) {  
+        return allianceStatus[otherKingdomId];
+    }
+    return AllianceStatus::NONE;  
+}
+
 void Kingdom::handleEvents()
 {
     eventManager.generateRandomEvent();

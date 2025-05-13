@@ -174,6 +174,7 @@ public:
     void recruitSoldiers();
     void paySoldiers();
     void trainSoldiers(int count);
+    void declareWar(Kingdom& kingdom);
     void manageMorale();
     void setSoldierCount(int count);
     int getSoldierCount() const;
@@ -199,6 +200,7 @@ public:
     double getHappiness(SocialClass sClass) const;
     double getOverallHappiness() const;
     int getTotalPopulation() const;
+    void affectHappiness(double amount);
     void affectHealth(double amount);
 };
 
@@ -320,6 +322,7 @@ public:
     Corruption corruption;
     CommunicationSystem comms;
     Diplomacy diplomacy;
+    AllianceStatus allianceStatus[10];
     
     Kingdom();
 
@@ -328,6 +331,8 @@ public:
     void update();
     void checkFinancialHealth();
     void handleEvents();
+    void updateAllianceStatus(int otherKingdomId, AllianceStatus status, const string& message);
+    AllianceStatus getAllianceStatus(int otherKingdomId) const;
     TradeSystem& getTradeSystem();
     Population& getPopulation();
     Leadership& getLeadership();

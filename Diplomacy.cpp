@@ -1,5 +1,4 @@
-#include "Diplomacy.h"
-#include "Kingdom.h"
+#include "Stronghold.h"
 #include <iostream>
 #include <string>
 
@@ -49,8 +48,8 @@ void Diplomacy::applyWarConsequences(Kingdom& kingdom1, Kingdom& kingdom2) {
     kingdom2.economy.adjustTaxRate(-0.1);
     
     
-    kingdom1.military.increaseSoldierRecruitment();  
-    kingdom2.military.increaseSoldierRecruitment();
+    kingdom1.military.recruitSoldiers();  
+    kingdom2.military.recruitSoldiers();
     
     
     kingdom1.corruption.increaseCorruption(5);  
