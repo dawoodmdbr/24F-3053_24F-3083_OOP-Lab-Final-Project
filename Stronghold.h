@@ -282,6 +282,7 @@ public:
 class Kingdom
 {
 public:
+	TradeSystem tradeSystem;
     string name;
     int id;
     Population population;
