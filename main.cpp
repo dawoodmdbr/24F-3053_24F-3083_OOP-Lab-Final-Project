@@ -12,7 +12,7 @@ void militaryMenu(Kingdom& kingdom) {
     Military& military = kingdom.getMilitary();
 
     while (true) {
-        cout << "\nMilitary Menu" << endl;
+        cout << "\n===MILITARY MENU===" << endl;
         cout << "1. Attempt Recruitment\n";
         cout << "2. View Soldier Count\n";
         cout << "3. Train Soldiers\n";
@@ -66,7 +66,7 @@ void militaryMenu(Kingdom& kingdom) {
 
 void economyMenu(Kingdom& kingdom) {
     int choice;
-    cout << "\nEconomy Menu\n";
+    cout << "\n===ECONOMY MENU===\n";
     cout << "1. Adjust Tax Rate\n";
     cout << "2. View Tax Rate\n";
     cout << "3. View Corruption Level\n";
@@ -103,7 +103,7 @@ void economyMenu(Kingdom& kingdom) {
 
 void resourceMenu(Kingdom& kingdom) {
     int choice;
-    cout << "\nResource Menu\n";
+    cout << "\n===RESOURCE MENU===\n";
     cout << "1. Gather Resources\n";
     cout << "2. View Resource Stockpile\n";
     cout << "0. Back to Main Menu\n";
@@ -157,7 +157,7 @@ void leadershipMenu(Kingdom& kingdom) {
         };
 
     while (true) {
-        cout << "\n=== Leadership Menu " << endl;
+        cout << "\n===LEADERSHIP MENU=== " << endl;
         cout << "1. Leader Overview\n";
         cout << "2. Hold Election\n";
         cout << "3. Initiate Coup\n";
@@ -257,7 +257,7 @@ void leadershipMenu(Kingdom& kingdom) {
         }
 
         case 5: {
-            cout << "\nPopularity Menu\n";
+            cout << "\n---POPULARITY MENU---\n";
             cout << "Current: " << clampPercent(leadership.getPopularity()) << "%\n";
             cout << "Effects:\n";
             cout << "- Tax collection efficiency: "
@@ -433,7 +433,7 @@ int main() {
     cout << "\nWelcome to Stronghold Management\n";
 
     while (true) {
-        cout << "\nTurn " << turn << "\n";
+        cout << "\nDay " << turn << "\n";
         displayMainMenu();
         cin >> mainChoice;
 
