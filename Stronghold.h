@@ -324,7 +324,9 @@ public:
     Diplomacy diplomacy;
     AllianceStatus allianceStatus[10];
     string lastReceivedMessage;
+
     Kingdom();
+    Kingdom(string name);
 
     string getName() const;
     int getId() const;

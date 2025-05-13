@@ -5,7 +5,7 @@
 using namespace std;
 
 MultiplayerSystem::MultiplayerSystem()
-    : isPlayer1Turn(true), currentTurn(1), player1Name("Player 1"), player2Name("Player 2") {}
+    : isPlayer1Turn(true), currentTurn(1), player1Name(), player2Name() {}
 
 void MultiplayerSystem::startGame() {
     cout << "=== MULTIPLAYER MODE ===" << endl;
@@ -16,8 +16,8 @@ void MultiplayerSystem::startGame() {
 
     cout << "Player 2, enter your name: ";
     getline(cin, player2Name);
-    player1 = Kingdom();
-    player2 = Kingdom();
+    player1 = Kingdom(player1Name);
+    player2 = Kingdom(player2Name);
     Logger logger;
     logger.logGameStart(true, player1Name, player2Name);
     cout << endl << "Game started! " << player1Name << " goes first." << endl;

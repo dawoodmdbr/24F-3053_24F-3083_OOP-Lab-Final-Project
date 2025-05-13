@@ -18,6 +18,22 @@ Kingdom::Kingdom()
     diplomacy = Diplomacy();
 }
 
+Kingdom::Kingdom(string name)
+{
+    this->name = name;
+    population = Population();
+    leadership = Leadership("Leader");
+    economy = Economy();
+    bank = Bank();
+    military = Military();
+    resourceManager = ResourceManager();
+    eventManager = EventManager();
+    corruption = Corruption();
+    comms = CommunicationSystem("chatHistory.txt");
+    tradeSystem = TradeSystem();
+    diplomacy = Diplomacy();
+}
+
 string Kingdom::getName() const
 {
     return name;

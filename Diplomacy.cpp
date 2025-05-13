@@ -44,8 +44,8 @@ void Diplomacy::declareWar(Kingdom& kingdom1, Kingdom& kingdom2) {
 
 void Diplomacy::applyWarConsequences(Kingdom& kingdom1, Kingdom& kingdom2) {
     
-    kingdom1.economy.adjustTaxRate(-0.1);  
-    kingdom2.economy.adjustTaxRate(-0.1);
+    kingdom1.economy.adjustTaxRate(0.1);  
+    kingdom2.economy.adjustTaxRate(0.1);
     
     
     kingdom1.military.recruitSoldiers();  
