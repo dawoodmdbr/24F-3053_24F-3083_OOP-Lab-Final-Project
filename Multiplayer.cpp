@@ -1,59 +1,73 @@
 #include "Stronghold.h"
-#include <string>
-#include <iostream>
-
-using namespace std;
-
-MultiplayerSystem::MultiplayerSystem()
-    : isPlayer1Turn(true), currentTurn(1), player1Name("Player 1"), player2Name("Player 2") {}
-
-void MultiplayerSystem::startGame() {
-    cout << "=== MULTIPLAYER MODE ===" << endl;
-
-    cout << "Player 1, enter your name: ";
-    cin.ignore();
-    getline(cin, player1Name);
-
-    cout << "Player 2, enter your name: ";
-    getline(cin, player2Name);
-    player1 = Kingdom();
-    player2 = Kingdom();
-    Logger logger;
-    logger.logGameStart(true, player1Name, player2Name);
-    cout << endl << "Game started! " << player1Name << " goes first." << endl;
+#include<iostream>
+Military::Military() {
+    soldierCount = 100;
+    morale = 50.0;
+    foodRequired = 0.0;
+    payRequired = 0.0;
+    corruptionLevel = 0.0;
 }
-
-void MultiplayerSystem::switchTurn() {
-    isPlayer1Turn = !isPlayer1Turn;
-    if (isPlayer1Turn) {
-        currentTurn++;
-        cout << endl << "=== TURN " << currentTurn << " ===" << endl;
+void Military::recruitSoldiers() {
+    int randomRecruits = rand() % 21 + 10;
+    soldierCount += randomRecruits;
+    cout << randomRecruits << " soldiers were recruited in this attempt.\n";
+}
+void Military::trainSoldiers(int count) {
+    if (count <= 0) {
+        cout << "Cannot train zero or negative soldiers!\n";
+        return;
+    }
+    if (count > soldierCount) {
+        cout << "Not enough soldiers available to train!\n";
+        return;
+    }
+    morale = min(1.0, morale + (count * 0.01));
+    cout << count << " soldiers completed basic training.\n";
+    cout << "Morale improved to " << (morale * 100) << "%\n";
+}
+void Military::update(Kingdom& kingdom) {
+    manageMorale();
+    if (foodRequired > 0) {
+        foodRequired -= 1.0;
+        if (foodRequired < 0.0) foodRequired = 0.0;
+    }
+    if (payRequired > 0) {
+        paySoldiers();
+    }
+}
+void Military::paySoldiers() {
+    if (payRequired > 0) {
+        payRequired = 0.0;
+        morale += 10.0;
+        decreaseCorruption(5.0);
+        if (morale > 100.0) morale = 100.0;
+    }
+    else {
+        morale -= 5.0;
+        increaseCorruption(5.0);
+        if (morale < 0.0) morale = 0.0;
+    }
+}
+void Military::manageMorale() {
+    if (foodRequired > 0) {
+        morale -= 5.0;
+        increaseCorruption(2.0);
+        if (morale < 0.0) morale = 0.0;
+    }
+    if (isCorrupted()) {
+        morale -= corruptionLevel * 0.1;
+        if (morale < 0.0) morale = 0.0;
     }
 }
 
-void MultiplayerSystem::processCurrentTurn() {
-    Kingdom& current = getCurrentPlayer();
-    current.update();
-    current.getTradeSystem().updateMarket();
-    current.handleEvents();
+int  Military::getSoldierCount() const {
+    return soldierCount;
 }
 
-Kingdom& MultiplayerSystem::getCurrentPlayer() {
-    return isPlayer1Turn ? player1 : player2;
+void Military::setSoldierCount(int count) {
+    soldierCount = count;
 }
 
-Kingdom& MultiplayerSystem::getOpponentPlayer() {
-    return isPlayer1Turn ? player2 : player1;
-}
-
-string MultiplayerSystem::getCurrentPlayerName() const {
-    return isPlayer1Turn ? player1Name : player2Name;
-}
-
-bool MultiplayerSystem::isCurrentPlayer1() const {
-    return isPlayer1Turn;
-}
-
-int MultiplayerSystem::getCurrentTurn() const {
-    return currentTurn;
+double Military::getMorale() const {
+    return morale;
 }
