@@ -18,7 +18,8 @@ void MultiplayerSystem::startGame() {
     getline(cin, player2Name);
     player1 = Kingdom();
     player2 = Kingdom();
-
+    Logger logger;
+    logger.logGameStart(true, player1Name, player2Name);
     cout << endl << "Game started! " << player1Name << " goes first." << endl;
 }
 
