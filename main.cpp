@@ -431,37 +431,85 @@ int main() {
     int turn = 1;
 
     cout << "\nWelcome to Stronghold Management\n";
+    cout << "\n1. Single Player\n";
+    cout << "2. Multiplayer\n";
+    cout << "Choice: ";
 
-    while (true) {
-        cout << "\nDay " << turn << "\n";
-        displayMainMenu();
-        cin >> mainChoice;
+    int gameMode;
+    cin >> gameMode;
 
-        switch (mainChoice) {
-        case 1: militaryMenu(myKingdom); break;
-        case 2: economyMenu(myKingdom); break;
-        case 3: resourceMenu(myKingdom); break;
-        case 4: populationMenu(myKingdom); break;
-        case 5: leadershipMenu(myKingdom); break;
-		case 6: tradeMenu(myKingdom); break;
-        case 7:
-            cout << "\nProcessing Turn " << turn << "...\n";
-            myKingdom.update();
-            myKingdom.handleEvents();
-            randomEvent(myKingdom);
-            myKingdom.checkFinancialHealth();
-            ++turn;
-            break;
-        case 0:
-            cout << "\nExiting game. Thank you for playing.\n";
-            return 0;
-        default:
-            cout << "Invalid choice.\n";
+    if (gameMode == 1) {
+        Kingdom singlePlayerKingdom;
+        while (true) {
+            cout << "\nDay " << turn << "\n";
+            displayMainMenu();
+            cin >> mainChoice;
+
+            switch (mainChoice) {
+            case 1: militaryMenu(myKingdom); break;
+            case 2: economyMenu(myKingdom); break;
+            case 3: resourceMenu(myKingdom); break;
+            case 4: populationMenu(myKingdom); break;
+            case 5: leadershipMenu(myKingdom); break;
+            case 6: tradeMenu(myKingdom); break;
+            case 7:
+                cout << "\nProcessing Turn " << turn << "...\n";
+                myKingdom.update();
+                myKingdom.handleEvents();
+                randomEvent(myKingdom);
+                myKingdom.checkFinancialHealth();
+                ++turn;
+                break;
+            case 0:
+                cout << "\nExiting game. Thank you for playing.\n";
+                return 0;
+            default:
+                cout << "Invalid choice.\n";
+            }
+
+            system("pause");
+            system("cls");
         }
-
-        system("pause");
-        system("cls");
     }
+    else if (gameMode == 2) {
+        MultiplayerSystem multiplayer;
+        multiplayer.startGame();
 
-    return 0;
+        while (true) {
+            cout << "\nDay " << multiplayer.getCurrentTurn() << "\n";
+			cout <<multiplayer.getCurrentPlayerName() << "'s Turn\n";
+            displayMainMenu();
+            cin >> mainChoice;
+
+            switch (mainChoice) {
+            case 1: militaryMenu(multiplayer.getCurrentPlayer()); break;
+            case 2: economyMenu(multiplayer.getCurrentPlayer()); break;
+            case 3: resourceMenu(multiplayer.getCurrentPlayer()); break;
+            case 4: populationMenu(multiplayer.getCurrentPlayer()); break;
+            case 5: leadershipMenu(multiplayer.getCurrentPlayer()); break;
+            case 6: tradeMenu(multiplayer.getCurrentPlayer()); break;
+            case 7:
+                cout << "\nProcessing Turn " << multiplayer.getCurrentTurn() << "...\n";
+                multiplayer.processCurrentTurn();
+                randomEvent(multiplayer.getCurrentPlayer());
+                multiplayer.switchTurn();
+                break;
+            case 0:
+                cout << "\nExiting game. Thank you for playing.\n";
+                return 0;
+            default:
+                cout << "Invalid choice.\n";
+            }
+
+            system("pause");
+            system("cls");
+        }
+    }
+    else {
+        cout << "Invalid game mode selected.\n";
+
+
+
+        return 0;
+    }
 }
