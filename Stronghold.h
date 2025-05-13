@@ -250,23 +250,7 @@ public:
     void showFileChat() const;
 };
 
-class Diplomacy {
-private:
-    string kingdomNames[10];
-    bool alliances[10][10];
-    string allianceHistory[100];
-    int kingdomCount;
-    int historyCount;
-public:
-    Diplomacy();
-    void registerKingdom(Kingdom& kingdom);
-    void proposeAlliance(Kingdom& kingdom1, Kingdom& kingdom2);
-    void acceptAlliance(Kingdom& kingdom1, Kingdom& kingdom2);
-    void breakAlliance(Kingdom& kingdom1, Kingdom& kingdom2);
-    bool isAllied(Kingdom& kingdom1, Kingdom& kingdom2) const;
-    void showAlliances() const;
-    void showAllianceHistory() const;
-};
+
 
 class TradeSystem {
 private:
@@ -281,23 +265,42 @@ public:
     double getPrice(ResourceType resource) const;
 };
 
-class War {
-private:
-    Kingdom* attacker;
-    Kingdom* defender;
-    bool isActive;
-    int duration;
-
-public:
-    War();
-    War(Kingdom* atk, Kingdom* def);
-    void start();
-    void simulateRound();
-    void end();
-    bool getStatus() const;
-    string getWinner() const;
-    void showStatus() const;
+enum AllianceStatus {
+    NONE,         
+    ALLIED,       
+    ENEMY,        
+    BETRAYED,     
+    ALLIANCE_STATUS_COUNT
 };
+
+class Diplomacy {
+public:
+    Diplomacy();  
+
+    
+    void formAlliance(Kingdom& kingdom1, Kingdom& kingdom2);  
+    void breakAlliance(Kingdom& kingdom1, Kingdom& kingdom2); 
+    void declareWar(Kingdom& kingdom1, Kingdom& kingdom2);    
+
+    
+    void applyWarConsequences(Kingdom& kingdom1, Kingdom& kingdom2); 
+    void applyBetrayalConsequences(Kingdom& kingdom1, Kingdom& kingdom2); 
+
+    
+    bool isAllied(Kingdom& kingdom1, Kingdom& kingdom2) const; 
+    bool isAtWar(Kingdom& kingdom1, Kingdom& kingdom2) const;  
+    bool hasBetrayed(Kingdom& kingdom1, Kingdom& kingdom2) const; 
+
+private:
+    
+    void logAllianceFormed(Kingdom& kingdom1, Kingdom& kingdom2); 
+    void logAllianceBroken(Kingdom& kingdom1, Kingdom& kingdom2); 
+    void logWarDeclared(Kingdom& kingdom1, Kingdom& kingdom2);    
+
+    
+};
+
+
 
 
 

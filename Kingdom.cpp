@@ -5,22 +5,8 @@ using namespace std;
 
 Kingdom::Kingdom()
 {
-    string kingdomName, leader;
-    int id;
-
-    cout << "Enter Kingdom name: ";
-    cin >> kingdomName;
-    cout << "Enter id: ";
-    cin >> id;
-    cout << "Enter Leader Name: ";
-    cin >> leader;
-
-    name = kingdomName;
-    this->id = id;
-
-
     population = Population();
-    leadership = Leadership(leader);
+    leadership = Leadership("Leader");
     economy = Economy();
     bank = Bank();
     military = Military();

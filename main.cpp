@@ -547,7 +547,7 @@ int main() {
     int turn = 1;
 
     cout << endl << " Welcome to Stronghold Management" << endl;
-    cout << endl << " 1. Single Player" << endl;
+    cout << endl << "1. Single Player" << endl;
     cout << "2. Multiplayer" << endl;
     cout << "Choice: ";
 
