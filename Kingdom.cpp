@@ -13,6 +13,7 @@ Kingdom::Kingdom(const string& name, int id, const string& leaderName) : name(na
     eventManager = EventManager();
     corruption = Corruption();
     comms = CommunicationSystem();
+	tradeSystem = TradeSystem();
 }
 
 string Kingdom::getName() const {
@@ -35,7 +36,7 @@ void Kingdom::update() {
 }
 
 void Kingdom::checkFinancialHealth() {
-  
+
     if (economy.getGoldReserve() < 1000.0) {
         cout << "Warning: Low gold reserve!" << endl;
     }
@@ -46,14 +47,16 @@ void Kingdom::checkFinancialHealth() {
 
 void Kingdom::handleEvents() {
     eventManager.generateRandomEvent();
-    Event latestEvent = eventManager.getLatestEvent(); 
+    Event latestEvent = eventManager.getLatestEvent();
     eventManager.applyEvent(latestEvent);
     eventManager.handleEvent(*this, latestEvent);
 }
 
 
 
-
+TradeSystem& Kingdom::getTradeSystem() {
+	return tradeSystem;
+}
 Population& Kingdom::getPopulation() {
     return population;
 }
