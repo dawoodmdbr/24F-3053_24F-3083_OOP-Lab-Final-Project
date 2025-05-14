@@ -13,6 +13,9 @@ void Bank::issueLoan(double amount) {
         }
     }
 }
+void Bank::setLoanAmount(double a) {
+    loanAmount = a;
+}
 void Bank::repayLoan(double amount) {
     if (amount <= 0) {
         return;
