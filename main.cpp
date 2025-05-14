@@ -163,7 +163,7 @@ void leadershipMenu(Kingdom& kingdom) {
         cout << "3. Initiate Coup" << endl;
         cout << "4. Change Leader" << endl;
         cout << "5. View Popularity Effects" << endl;
-        cout << "6. Return to Main Menu" << endl;
+        cout << "0. Return to Main Menu" << endl;
         cout << "Choice: ";
 
         int choice;
@@ -263,7 +263,7 @@ void leadershipMenu(Kingdom& kingdom) {
             break;
         }
 
-        case 6:
+        case 0:
             return;
 
         default:
